@@ -2,6 +2,21 @@
 
 **This is a list detailing changes for all Jetpack releases.**
 
+= 9.2.1 =
+
+* Release date:  December 10, 2020
+
+**Improved compatibility**
+
+* Site Health Tools: improve PHP 8 compatibility.
+* Twenty Twenty One: add support for Jetpack's Content Options.
+
+**Bug fixes**
+
+* Instant Search: fix layout issues with filtering checkboxes with some themes.
+* WordPress.com Toolbar: avoid Fatal errors when the feature is not active.
+* WordPress.com Toolbar: avoid 404 errors when loading the toolbar.
+
 = 9.2 =
 
 * Release date: December 1, 2020
@@ -13,7 +28,6 @@
 * Contact Form Block: display fallback link when the block is rendered in non-WordPress contexts, such as subscription emails.
 * Contact Form Block: display the correct default email address and subject in the form block settings.
 * Dashboard: clarify language around support options.
-* Dashboard: replace /plans and /plans-prompt routes with a redirect to cloud.jetpack.com/pricing.
 * Instagram Embeds: add support for embed parameters supported by Instagram.
 * Payments Block: move unreadable notice to the sidebar.
 * Pinterest Block: ensure that Pinterest embeds are displayed nicely in non-WordPress contexts, such as subscription emails.
@@ -38,7 +52,6 @@
 * Sharing: disable Open Graph Meta tags added by the Web Stories plugin when Jetpack's tags are active.
 * Stats: support Web Stories plugin.
 * Synchronization: ensure better synchronization of post meta data (used by Publicize, Subscriptions, Search) in WordPress 5.6.
-* Twenty Twenty-One: ensure that Jetpack's features are compatible with the upcoming new default theme
 
 **Bug fixes**
 
