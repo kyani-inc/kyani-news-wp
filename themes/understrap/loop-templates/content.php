@@ -9,48 +9,56 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
+<div class="col-12 col-md-4 col-xl-3 d-flex align-items-stretch">
+	<div <?php post_archive_class(); ?> id="post-<?php the_ID(); ?>">
 
-	<header class="entry-header">
+		<?php echo get_the_post_thumbnail( $post->ID, 'thumbnail' ); ?>
+		<div class="card-body">
 
-		<?php
-		the_title(
-			sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ),
-			'</a></h2>'
-		);
-		?>
 
-		<?php if ( 'post' === get_post_type() ) : ?>
+			<header class="entry-header archive">
+				<?php if ( 'news' === get_post_type() ) : ?>
 
-			<div class="entry-meta">
-				<?php understrap_posted_on(); ?>
-			</div><!-- .entry-meta -->
+					<div class="entry-meta">
+						<?php understrap_posted_on(); ?>
+					</div><!-- .entry-meta -->
 
-		<?php endif; ?>
+				<?php endif; ?>
 
-	</header><!-- .entry-header -->
+				<?php
+				the_title(
+						sprintf( '<h5 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ),
+						'</a></h5>'
+				);
+				?>
 
-	<?php echo get_the_post_thumbnail( $post->ID, 'large' ); ?>
 
-	<div class="entry-content">
 
-		<?php the_excerpt(); ?>
+			</header><!-- .entry-header -->
 
-		<?php
-		wp_link_pages(
-			array(
-				'before' => '<div class="page-links">' . __( 'Pages:', 'understrap' ),
-				'after'  => '</div>',
-			)
-		);
-		?>
 
-	</div><!-- .entry-content -->
 
-	<footer class="entry-footer">
+			<div class="entry-content">
 
-		<?php understrap_entry_footer(); ?>
+				<?php the_excerpt(); ?>
 
-	</footer><!-- .entry-footer -->
+				<?php
+				wp_link_pages(
+						array(
+								'before' => '<div class="page-links">' . __( 'Pages:', 'understrap' ),
+								'after'  => '</div>',
+						)
+				);
+				?>
 
-</article><!-- #post-## -->
+			</div><!-- .entry-content -->
+
+			<footer class="entry-footer">
+
+				<?php understrap_entry_footer(); ?>
+
+			</footer><!-- .entry-footer -->
+		</div>
+	</div><!-- #post-## -->
+</div>
+

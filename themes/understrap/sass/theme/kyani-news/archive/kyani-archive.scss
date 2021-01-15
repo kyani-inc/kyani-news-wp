@@ -1,0 +1,20 @@
+div[class^="post-"].card.archive-card {
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 2px 8px 4px #DDDDDD;
+
+  .card-img-top {
+	border-radius: 0;
+	width: 100%;
+	height: 15vw;
+	object-fit: cover;
+  }
+
+  .posted-on {
+	.entry-date{
+	  color: #666666;
+	  font-size: 12px;
+	}
+
+  }
+}
