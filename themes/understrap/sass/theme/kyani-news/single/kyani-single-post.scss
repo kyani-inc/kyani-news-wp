@@ -1,0 +1,49 @@
+.site-main {
+
+  .entry-header{
+
+	.entry-date {
+	  color: #666666;
+	  font-size: 14px;
+	}
+
+	.entry-title {
+	  color: #4c4c4c;
+	  padding: 10px 0;
+	  font-size: 2rem;
+	}
+  }
+
+  .entry-social {
+	font-size: 14px;
+	margin-bottom: 16px;
+	color: #666666;
+
+	.social-icons{
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+
+	  img {
+		padding: 2px;
+	  }
+	}
+  }
+
+  .entry-image{
+	text-align: center;
+
+	.wp-post-image {
+	  width: 100%;
+	}
+  }
+
+  .entry-content {
+	color: #666666;
+	padding: 24px 0;
+
+	a {
+	  color: #002855;
+	}
+  }
+}
