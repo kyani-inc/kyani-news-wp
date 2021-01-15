@@ -17,13 +17,10 @@ defined( 'ABSPATH' ) || exit;
 
 
 			<header class="entry-header archive">
-				<?php if ( 'news' === get_post_type() ) : ?>
 
-					<div class="entry-meta">
-						<?php understrap_posted_on(); ?>
-					</div><!-- .entry-meta -->
-
-				<?php endif; ?>
+				<div class="entry-meta">
+					<?php understrap_posted_on(); ?>
+				</div><!-- .entry-meta -->
 
 				<?php
 				the_title(
@@ -31,8 +28,6 @@ defined( 'ABSPATH' ) || exit;
 						'</a></h5>'
 				);
 				?>
-
-
 
 			</header><!-- .entry-header -->
 
