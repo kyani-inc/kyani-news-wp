@@ -47,7 +47,6 @@ if ( ! function_exists( 'understrap_setup' ) ) {
 		register_nav_menus(
 			array(
 				'primary' => __( 'Primary Menu', 'understrap' ),
-				'secondary' => __('Secondary Menu', 'understrap' )
 			)
 		);
 
@@ -114,71 +113,6 @@ if ( ! function_exists( 'understrap_setup' ) ) {
 		// Check and setup theme default settings.
 		understrap_setup_theme_default_settings();
 
-		/*
-* Creating a function to create our CPT
-*/
-
-		function custom_post_type() {
-
-// Set UI labels for Custom Post Type
-			$labels = array(
-				'name'                => _x( 'News', 'Post Type General Name', 'understrap' ),
-				'singular_name'       => _x( 'Story', 'Post Type Singular Name', 'understrap' ),
-				'menu_name'           => __( 'News', 'understrap' ),
-				'parent_item_colon'   => __( 'Parent Story', 'understrap' ),
-				'all_items'           => __( 'All News', 'understrap' ),
-				'view_item'           => __( 'View Story', 'understrap' ),
-				'add_new_item'        => __( 'Add New Story', 'understrap' ),
-				'add_new'             => __( 'Add New', 'understrap' ),
-				'edit_item'           => __( 'Edit News Story', 'understrap' ),
-				'update_item'         => __( 'Update News Story', 'understrap' ),
-				'search_items'        => __( 'Search News', 'understrap' ),
-				'not_found'           => __( 'Not Found', 'understrap' ),
-				'not_found_in_trash'  => __( 'Not found in Trash', 'understrap' ),
-			);
-
-// Set other options for Custom Post Type
-
-			$args = array(
-				'label'               => __( 'news', 'understrap' ),
-				'description'         => __( 'Kyani news', 'understrap' ),
-				'labels'              => $labels,
-				// Features this CPT supports in Post Editor
-				'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-				// You can associate this CPT with a taxonomy or custom taxonomy.
-				'taxonomies'          => array( 'genres' ),
-				/* A hierarchical CPT is like Pages and can have
-				* Parent and child items. A non-hierarchical CPT
-				* is like Posts.
-				*/
-				'hierarchical'        => false,
-				'public'              => true,
-				'show_ui'             => true,
-				'show_in_menu'        => true,
-				'show_in_nav_menus'   => true,
-				'show_in_admin_bar'   => true,
-				'menu_position'       => 5,
-				'can_export'          => true,
-				'has_archive'         => true,
-				'exclude_from_search' => false,
-				'publicly_queryable'  => true,
-				'capability_type'     => 'post',
-				'show_in_rest' => true,
-				'rewrite' => array('slug' => 'news', 'with_front' => false)
-			);
-
-			// Registering your Custom Post Type
-			register_post_type( 'news', $args );
-
-		}
-
-		/* Hook into the 'init' action so that the function
-		* Containing our post type registration is not
-		* unnecessarily executed.
-		*/
-
-		add_action( 'init', 'custom_post_type', 0 );
-
 	}
 }
 
@@ -212,9 +146,29 @@ if ( ! function_exists( 'understrap_all_excerpts_get_more_link' ) ) {
 	 * @return string
 	 */
 	function understrap_all_excerpts_get_more_link( $post_excerpt ) {
-		if ( ! is_admin() ) {
-			$post_excerpt = $post_excerpt . ' ...';
+
+		$excerpt = explode(' ', $post_excerpt, 12);
+
+		if (count($excerpt) >= 12) {
+			array_pop($excerpt);
+			$excerpt = implode(" ", $excerpt) . '...';
+		} else {
+			$excerpt = implode(" ", $excerpt);
 		}
-		return $post_excerpt;
+
+		$excerpt = preg_replace('`\[[^\]]*\]`', '', $excerpt);
+
+		return $excerpt;
 	}
 }
+
+function wpshout_longer_excerpts( $length ) {
+	// Don't change anything inside /wp-admin/
+	if ( is_admin() ) {
+		return $length;
+	}
+	// Set excerpt length to 140 words
+	return 12;
+}
+// "999" priority makes this run last of all the functions hooked to this filter, meaning it overrides them
+add_filter( 'excerpt_length', 'wpshout_longer_excerpts', 999 );

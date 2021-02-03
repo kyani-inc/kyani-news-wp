@@ -9,9 +9,10 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
+<article <?php post_class('news-single-post'); ?> id="post-<?php the_ID(); ?>">
 
-	<header class="entry-header text-center">
+	<header class="entry-header">
+
 		<div class="entry-meta">
 
 			<?php understrap_posted_on(); ?>
@@ -20,21 +21,18 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 
-	</header><!-- .entry-header -->
+		<hr/>
 
-	<div class="entry-social text-center">
-		<hr style="width: 20%">
-		<div class="social-icons">
-			<span>Share on: </span>
+		<div class="entry-social-share">
+			<span><?php echo esc_html__('Share on: ', 'understrap')?></span>
 			<img src="<?php echo esc_url(bloginfo('template_directory') . "/images/facebook.svg") ?>">
 			<img src="<?php echo esc_url(bloginfo('template_directory') . "/images/twitter.svg") ?>">
 			<img src="<?php echo esc_url(bloginfo('template_directory') . "/images/instagram.svg") ?>">
 		</div>
-	</div>
 
-	<div class="entry-image">
-		<?php echo get_the_post_thumbnail( $post->ID, 'full' ); ?>
-	</div>
+	</header><!-- .entry-header -->
+
+	<?php echo get_the_post_thumbnail( $post->ID, 'full', array('class'=> 'single-post-banner')); ?>
 
 	<div class="entry-content">
 
