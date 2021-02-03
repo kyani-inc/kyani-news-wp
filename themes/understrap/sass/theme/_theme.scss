@@ -1,8 +1,13 @@
 // This is an empty scss file for your custom styles - Please add your super duper awesome mega design styles here
-@import "kyani-nav/kyani-nav";
-@import "kyani-news/single/kyani-single-post.scss";
-@import "kyani-news/archive/kyani-archive.scss";
+@import 'kyani-nav/kyani-nav';
+@import 'kyani-nav/side-menu';
+@import 'kyani-archive/archive-search-form';
+@import 'kyani-archive/featured-carousel';
+@import 'kyani-single/single-post';
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
 
 body {
+  font-family: 'Nunito', sans-serif;
   background-color: #f8f8f8;
 }

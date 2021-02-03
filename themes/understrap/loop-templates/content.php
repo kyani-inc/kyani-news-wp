@@ -6,54 +6,40 @@
  */
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 ?>
+<div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch">
+	<div <?php post_class("card"); ?> id="post-<?php the_ID(); ?>">
+		<div class="row">
+			<div class="col-5 col-sm-12">
+				<?php
+				$image_id = get_post_meta($post->ID, "_listing_image_id", true);
 
-<div class="col-12 col-md-4 col-xl-3 d-flex align-items-stretch">
-	<div <?php post_archive_class(); ?> id="post-<?php the_ID(); ?>">
-
-		<?php echo get_the_post_thumbnail( $post->ID, 'thumbnail' ); ?>
-		<div class="card-body">
-
-
-			<header class="entry-header archive">
-
-				<div class="entry-meta">
+				if (!empty($image_id)) {
+					$image = wp_get_attachment_image($image_id, "full");
+					echo $image;
+				} else {
+					the_post_thumbnail('thumbnail', array(170, 170));
+				}
+				?>
+			</div>
+			<div class="col-7 col-sm-12">
+				<div class="card-body">
 					<?php understrap_posted_on(); ?>
-				</div><!-- .entry-meta -->
-
-				<?php
-				the_title(
-						sprintf( '<h5 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ),
-						'</a></h5>'
-				);
-				?>
-
-			</header><!-- .entry-header -->
-
-
-
-			<div class="entry-content">
-
-				<?php the_excerpt(); ?>
-
-				<?php
-				wp_link_pages(
-						array(
-								'before' => '<div class="page-links">' . __( 'Pages:', 'understrap' ),
-								'after'  => '</div>',
-						)
-				);
-				?>
-
-			</div><!-- .entry-content -->
-
-			<footer class="entry-footer">
-
-				<?php understrap_entry_footer(); ?>
-
-			</footer><!-- .entry-footer -->
+					<h5 class="card-title"><a
+								href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
+					<p class="card-text"><?php echo get_the_excerpt(); ?></p>
+					<?php
+					wp_link_pages(
+							array(
+									'before' => '<div class="page-links">' . __('Pages:', 'understrap'),
+									'after' => '</div>',
+							)
+					);
+					?>
+					<?php understrap_entry_footer(); ?>
+				</div>
+			</div>
 		</div>
-	</div><!-- #post-## -->
+	</div>
 </div>
-
