@@ -119,6 +119,9 @@ function set_custom_edit_news_columns($columns) {
 	unset($columns['news_featured_post']);
 	$columns['news_featured_post'] = __('Featured Post', 'your_text_domain');
 
+	unset($columns['backoffice_published']);
+	$columns['backoffice_published'] = __('Published to Back Office', 'your_text_domain');
+
 	return $columns;
 }
 
@@ -128,15 +131,26 @@ function custom_news_column($column, $post_id) {
 	switch ($column) {
 
 		case 'news_featured_post' :
-			$meta = get_post_meta($post_id, 'meta-checkbox', true);
+			$meta = get_post_meta($post_id, 'post_featured', true);
 			if (is_string($meta))
 				if ($meta === "yes") {
 					echo '&#9989;';
 				} else {
-					echo $meta;
+					echo "";
 				}
 			else
 				_e('Unable to get featured post', 'your_text_domain');
+			break;
+		case 'backoffice_published' :
+			$published = get_post_meta($post_id, 'backoffice_published', true);
+			if (is_string($published))
+				if ($published === "yes") {
+					echo '&#9989;';
+				} else {
+					echo "";
+				}
+			else
+				_e('Unable to get back office setting');
 			break;
 	}
 }
@@ -230,7 +244,7 @@ function get_backoffice_news($request){
 	$args = array(
 		'numberposts' => -1,
 		'post_type' => 'news',
-		'meta_key' => 'backoffice-checkbox',
+		'meta_key' => 'backoffice_published',
 		'meta_value' => 'yes',
 	);
 
@@ -281,29 +295,54 @@ function backoffice_meta_box() {
  * Display check box in metabox for featured post
  */
 function backoffice_meta_display($post) {
-	$featured = get_post_meta($post->ID); ?>
+	$featured = get_post_meta($post->ID);
+	$post_featured = get_post_meta($post->ID, 'post_featured', true);
+	$backoffice_published = get_post_meta($post->ID, 'backoffice_published', true);
+	echo '<script>console.log('. $backoffice_published .')</script>';
 
-	<p>
-	<div class="sm-row-content">
-		<label for="backoffice-checkbox">
-			<input type="checkbox" name="backoffice-checkbox" id="backoffice-checkbox"
-				   value="yes" <?php if (isset ($featured['backoffice-checkbox'])) checked($featured['backoffice-checkbox'][0], 'yes'); ?> />
-			<?php _e('Add to Back Office', 'sm-textdomain') ?>
-		</label>
-	</div>
-	</p>
+	$html = "";
 
-	<p>
-	<div class="sm-row-content">
-		<label for="meta-checkbox">
-			<input type="checkbox" name="meta-checkbox" id="meta-checkbox"
-				   value="yes" <?php if (isset ($featured['meta-checkbox'])) checked($featured['meta-checkbox'][0], 'yes'); ?> />
-			<?php _e('Featured this post', 'sm-textdomain') ?>
-		</label>
-	</div>
-	</p>
+	//Featured post (radio)
+	$html .= '<p>';
+		$html .= '<p><strong>Featured Post?</strong></p>';
+	$html .= '<label for="post_featured_no">';
+		if($post_featured == 'no' || empty($post_featured)){
+		$html .= '<input type="radio" checked name="post_featured" id="post_featured_no" value="no"/>';
+		}else{
+		$html .= '<input type="radio" name="post_featured" id="post_featured_no" value="no"/>';
+		}
+		$html .= ' No</label>';
+	$html .= '</br>';
+	$html .= '<label for="post_featured_yes">';
+		if($post_featured == 'yes'){
+		$html .= '<input type="radio" checked name="post_featured" id="post_featured_yes" value="yes"/>';
+		}else{
+		$html .= '<input type="radio" name="post_featured" id="post_featured_yes" value="yes"/>';
+		}
+		$html .= ' Yes</label>';
+	$html .= '</p>';
 
-	<?php
+	//Featured post (radio)
+	$html .= '<p>';
+	$html .= '<p><strong>Display in BackOffice?</strong></p>';
+	$html .= '<label for="backoffice_published_no">';
+	if($backoffice_published == 'no' || empty($backoffice_published)){
+		$html .= '<input type="radio" checked name="backoffice_published" id="backoffice_published_no" value="no"/>';
+	}else{
+		$html .= '<input type="radio" name="backoffice_published" id="backoffice_published_no" value="no"/>';
+	}
+	$html .= ' No</label>';
+	$html .= '</br>';
+	$html .= '<label for="backoffice_published_yes">';
+	if($backoffice_published == 'yes'){
+		$html .= '<input type="radio" checked name="backoffice_published" id="backoffice_published_yes" value="yes"/>';
+	}else{
+		$html .= '<input type="radio" name="backoffice_published" id="backoffice_published_yes" value="yes"/>';
+	}
+	$html .= ' Yes</label>';
+	$html .= '</p>';
+
+	echo $html;
 }
 
 /*
@@ -320,6 +359,7 @@ function sm_meta_save($post_id) {
 	// Checks save status
 	$is_autosave = wp_is_post_autosave($post_id);
 	$is_revision = wp_is_post_revision($post_id);
+
 	$is_valid_nonce = (isset($_POST['sm_nonce']) && wp_verify_nonce($_POST['sm_nonce'], basename(__FILE__))) ? 'true' : 'false';
 
 	// Exits script depending on save status
@@ -327,11 +367,12 @@ function sm_meta_save($post_id) {
 		return;
 	}
 
-	$featured_post = (isset($_POST['meta-checkbox']) ? 'yes' : '');
-	$back_office = (isset($_POST['backoffice-checkbox']) ? 'yes' : '');
+	$featured_post = isset($_POST['post_featured']) ? sanitize_text_field($_POST['post_featured']) : '';
+	$back_office = isset($_POST['backoffice_published']) ? sanitize_text_field($_POST['backoffice_published']) : '';
 
-	update_post_meta($post_id, 'meta-checkbox', $featured_post);
-	update_post_meta($post_id, 'backoffice-checkbox', $back_office);
+
+	update_post_meta($post_id, 'post_featured', $featured_post);
+	update_post_meta($post_id, 'backoffice_published', $back_office);
 }
 
 /**

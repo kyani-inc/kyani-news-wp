@@ -46,7 +46,7 @@ $container = get_theme_mod('understrap_container_type');
 									 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
 									 */
 
-									if ( (is_tax()) || get_post_meta(get_the_ID(), 'meta-checkbox', true) !== "yes"){
+									if ( (is_tax()) || get_post_meta(get_the_ID(), 'post_featured', true) !== "yes"){
 										get_template_part('loop-templates/content', get_post_format());
 									}
 								} ?>

@@ -271,7 +271,16 @@ if (!function_exists('understrap_recommended_posts')) {
 							<div class="card">
 								<div class="row">
 									<div class="col-5 col-sm-12">
-										<?php the_post_thumbnail('thumbnail', array(170, 170)); ?>
+										<?php
+										$image_id = get_post_meta(get_the_ID(), "_listing_image_id", true);
+
+										if (!empty($image_id)) {
+											$image = wp_get_attachment_image($image_id, "full");
+											echo $image;
+										} else {
+											the_post_thumbnail('thumbnail', array(170, 170));
+										}
+										?>
 									</div>
 									<div class="col-7 col-sm-12">
 										<div class="card-body">
@@ -301,7 +310,7 @@ if (!function_exists('understrap_featured_carousel')) {
 	function understrap_featured_carousel() {
 		$args = array(
 				'post_type' => 'news',
-				'meta_key' => 'meta-checkbox',
+				'meta_key' => 'post_featured',
 				'meta_value' => 'yes',
 		);
 		$featured = new WP_Query($args);
@@ -310,15 +319,15 @@ if (!function_exists('understrap_featured_carousel')) {
 			<div class="carousel slide" id="carouselFeaturedPosts" data-ride="carousel">
 				<ol class="carousel-indicators">
 					<?php while ($featured->have_posts()):
-					$featured->the_post(); ?>
-					<li data-target="#carouselFeaturedPosts" data-slide-to="<?php echo $featured->current_post ?>"
-						class="<?php echo esc_attr(($featured->current_post === 0 ? "active" : ""))?>"></li>
+						$featured->the_post(); ?>
+						<li data-target="#carouselFeaturedPosts" data-slide-to="<?php echo $featured->current_post ?>"
+							class="<?php echo esc_attr(($featured->current_post === 0 ? "active" : "")) ?>"></li>
 					<?php endwhile; ?>
 				</ol>
 				<div class="carousel-inner">
 					<?php while ($featured->have_posts()):
 						$featured->the_post(); ?>
-						<div class="carousel-item <?php echo esc_attr(($featured->current_post === 0 ? "active" : ""))?>">
+						<div class="carousel-item <?php echo esc_attr(($featured->current_post === 0 ? "active" : "")) ?>">
 							<?php the_post_thumbnail('full', array('class' => 'd-block w-100')); ?>
 							<div class="carousel-caption d-none d-md-block">
 								<?php understrap_posted_on(); ?>
