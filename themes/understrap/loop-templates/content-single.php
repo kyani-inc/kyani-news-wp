@@ -23,12 +23,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<hr/>
 
-		<div class="entry-social-share">
-			<span><?php echo esc_html__('Share on: ', 'understrap')?></span>
-			<img src="<?php echo esc_url(bloginfo('template_directory') . "/images/facebook.svg") ?>">
-			<img src="<?php echo esc_url(bloginfo('template_directory') . "/images/twitter.svg") ?>">
-			<img src="<?php echo esc_url(bloginfo('template_directory') . "/images/instagram.svg") ?>">
-		</div>
+		<?php understrap_news_social_share() ?>
 
 	</header><!-- .entry-header -->
 

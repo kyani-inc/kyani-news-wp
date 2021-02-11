@@ -350,3 +350,31 @@ if (!function_exists('understrap_featured_carousel')) {
 		}
 	}
 }
+
+if (!function_exists('understrap_news_social_share')) {
+	/*
+	 * Display social share buttons on single post
+	 */
+	function understrap_news_social_share() {
+		// current page url
+		$sb_url = urlencode(get_permalink());
+
+		// current page title
+		$sb_title = str_replace(' ', '%20', get_the_title());
+
+		// construct sharing urls
+		$twitterURL = 'https://twitter.com/intent/tweet?text' . $sb_title . '&url=' . $sb_url . '&via=wpvkp';
+		$facebookURL = 'https://facebook.com/sharer/sharer.php?u=' . $sb_url;
+
+		// render sharing icons
+		?>
+		<div class="entry-social-share">
+			<span><?php echo esc_html__('Share on: ', 'understrap') ?></span>
+			<a href="<?php echo esc_url_raw($facebookURL) ?>"><img
+						src="<?php echo esc_url(bloginfo('template_directory') . "/images/facebook.svg") ?>"></a>
+			<a href="<?php echo esc_url_raw($twitterURL) ?>"><img
+						src="<?php echo esc_url(bloginfo('template_directory') . "/images/twitter.svg") ?>"></a>
+		</div>
+		<?php
+	}
+}
