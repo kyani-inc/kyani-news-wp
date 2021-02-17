@@ -4,7 +4,11 @@
 			e.preventDefault();
 			$('body').toggleClass('nav-open');
 			$('#side-panel-menu').toggleClass('visible');
+		});
 
+		$("ul.dropdown-menu [data-toggle='dropdown']").on("click", function (event) {
+			event.stopPropagation();
+			$(this).siblings().toggleClass("show");
 		});
 	});
 

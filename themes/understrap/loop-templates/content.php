@@ -12,16 +12,18 @@ defined('ABSPATH') || exit;
 	<div <?php post_class("card"); ?> id="post-<?php the_ID(); ?>">
 		<div class="row">
 			<div class="col-5 col-sm-12">
-				<?php
-				$image_id = get_post_meta($post->ID, "_listing_image_id", true);
+				<a href="<?php the_permalink(); ?>">
+					<?php
+					$image_id = get_post_meta($post->ID, "_listing_image_id", true);
 
-				if (!empty($image_id)) {
-					$image = wp_get_attachment_image($image_id, "full");
-					echo $image;
-				} else {
-					the_post_thumbnail('thumbnail', array(170, 170));
-				}
-				?>
+					if (!empty($image_id)) {
+						$image = wp_get_attachment_image($image_id, "full");
+						echo $image;
+					} else {
+						the_post_thumbnail('thumbnail', array(170, 170));
+					}
+					?>
+				</a>
 			</div>
 			<div class="col-7 col-sm-12">
 				<div class="card-body">

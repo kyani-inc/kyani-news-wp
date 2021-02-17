@@ -328,10 +328,24 @@ if (!function_exists('understrap_featured_carousel')) {
 					<?php while ($featured->have_posts()):
 						$featured->the_post(); ?>
 						<div class="carousel-item <?php echo esc_attr(($featured->current_post === 0 ? "active" : "")) ?>">
-							<?php the_post_thumbnail('full', array('class' => 'd-block w-100')); ?>
+							<a href="<?php the_permalink(); ?>">
+								<?php the_post_thumbnail('full', array('class' => 'd-block w-100 carousel-image-large')); ?>
+								<?php
+								$image_id = get_post_meta(get_the_ID(), "_listing_image_id", true);
+
+								if (!empty($image_id)) {
+									$image = wp_get_attachment_image($image_id, "full", "", array('class' => 'd-block w-100 carousel-image-mobile'));
+									echo $image;
+								} else {
+									the_post_thumbnail('thumbnail', array('class' => 'd-block w-100 carousel-image-mobile'));
+								}
+								?>
+							</a>
 							<div class="carousel-caption d-none d-md-block">
 								<?php understrap_posted_on(); ?>
-								<h3 class="carousel-post-title"><?php the_title() ?></h3>
+								<a href="<?php the_permalink(); ?>">
+									<h3 class="carousel-post-title"><?php the_title() ?></h3>
+								</a>
 								<p class="carousel-post-excerpt"><?php echo get_the_excerpt() ?></p>
 							</div>
 						</div>
@@ -363,16 +377,19 @@ if (!function_exists('understrap_news_social_share')) {
 		$sb_title = str_replace(' ', '%20', get_the_title());
 
 		// construct sharing urls
-		$twitterURL = 'https://twitter.com/intent/tweet?text' . $sb_title . '&url=' . $sb_url . '&via=wpvkp';
+		$twitterURL = 'https://twitter.com/intent/tweet?text' . $sb_title . '&url=' . $sb_url . '&via=KyaniCorp';
 		$facebookURL = 'https://facebook.com/sharer/sharer.php?u=' . $sb_url;
 
 		// render sharing icons
 		?>
 		<div class="entry-social-share">
 			<span><?php echo esc_html__('Share on: ', 'understrap') ?></span>
-			<a href="<?php echo esc_url_raw($facebookURL) ?>"><img
-						src="<?php echo esc_url(bloginfo('template_directory') . "/images/facebook.svg") ?>"></a>
-			<a href="<?php echo esc_url_raw($twitterURL) ?>"><img
+			<a href="<?php echo esc_url_raw($facebookURL) ?>" onclick="window.open(this.href, 'mywin',
+				'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+				<img src="<?php echo esc_url(bloginfo('template_directory') . "/images/facebook.svg") ?>"></a>
+
+			<a href="<?php echo esc_url_raw($twitterURL) ?>" onclick="window.open(this.href, 'mywin',
+				'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><img
 						src="<?php echo esc_url(bloginfo('template_directory') . "/images/twitter.svg") ?>"></a>
 		</div>
 		<?php

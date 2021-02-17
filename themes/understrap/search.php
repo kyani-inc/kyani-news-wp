@@ -6,74 +6,76 @@
  */
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 get_header();
 
-$container = get_theme_mod( 'understrap_container_type' );
+$container = get_theme_mod('understrap_container_type');
 
 ?>
 
-<div class="wrapper" id="search-wrapper">
+	<div class="wrapper" id="search-wrapper">
 
-	<div class="<?php echo esc_attr( $container ); ?>" id="content" tabindex="-1">
+		<div class="<?php echo esc_attr($container); ?>" id="content" tabindex="-1">
 
-		<div class="row">
+			<div class="row">
 
-			<!-- Do the left sidebar check and opens the primary div -->
-			<?php get_template_part( 'global-templates/left-sidebar-check' ); ?>
+				<!-- Do the left sidebar check and opens the primary div -->
+				<?php get_template_part('global-templates/left-sidebar-check'); ?>
 
-			<main class="site-main" id="main">
-
-				<?php if ( have_posts() ) : ?>
+				<main class="site-main" id="main">
+					<?php get_search_form(); ?>
+					<?php if (have_posts()) : ?>
 
 					<header class="page-header">
 
-							<h1 class="page-title">
-								<?php
-								printf(
-									/* translators: %s: query term */
-									esc_html__( 'Search Results for: %s', 'understrap' ),
+						<h1 class="page-title">
+							<?php
+							printf(
+							/* translators: %s: query term */
+									esc_html__('Search Results for: %s', 'understrap'),
 									'<span>' . get_search_query() . '</span>'
-								);
-								?>
-							</h1>
+							);
+							?>
+						</h1>
 
 					</header><!-- .page-header -->
 
-					<?php /* Start the Loop */ ?>
-					<?php
-					while ( have_posts() ) :
-						the_post();
+					<div class="post-cards-grid">
+						<div class="row">
+							<?php
+							while (have_posts()) :
+								the_post();
 
-						/*
-						 * Run the loop for the search to output the results.
-						 * If you want to overload this in a child theme then include a file
-						 * called content-search.php and that will be used instead.
-						 */
-						get_template_part( 'loop-templates/content', 'search' );
-					endwhile;
-					?>
+								/*
+								 * Run the loop for the search to output the results.
+								 * If you want to overload this in a child theme then include a file
+								 * called content-search.php and that will be used instead.
+								 */
+								get_template_part('loop-templates/content', get_post_format());
+							endwhile;
+							?>
 
-				<?php else : ?>
+							<?php else : ?>
 
-					<?php get_template_part( 'loop-templates/content', 'none' ); ?>
+								<?php get_template_part('loop-templates/content', 'none'); ?>
 
-				<?php endif; ?>
+							<?php endif; ?>
+						</div>
+					</div>
+				</main><!-- #main -->
 
-			</main><!-- #main -->
+				<!-- The pagination component -->
+				<?php understrap_pagination(); ?>
 
-			<!-- The pagination component -->
-			<?php understrap_pagination(); ?>
+				<!-- Do the right sidebar check -->
+				<?php get_template_part('global-templates/right-sidebar-check'); ?>
 
-			<!-- Do the right sidebar check -->
-			<?php get_template_part( 'global-templates/right-sidebar-check' ); ?>
+			</div><!-- .row -->
 
-		</div><!-- .row -->
+		</div><!-- #content -->
 
-	</div><!-- #content -->
-
-</div><!-- #search-wrapper -->
+	</div><!-- #search-wrapper -->
 
 <?php
 get_footer();

@@ -8,7 +8,8 @@
  */
 
 $kyani_plugin_includes = array(
-	'/setup.php'
+	'/setup.php',
+	'/nav-country-switcher.php'
 );
 
 foreach ($kyani_plugin_includes as $file) {
