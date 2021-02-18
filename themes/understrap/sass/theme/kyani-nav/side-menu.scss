@@ -9,6 +9,7 @@
   overflow-x: hidden;
   transition: transform .75s, opacity .75s linear 0s;
   z-index: 101;
+  text-transform: uppercase;
 
   @media screen and (max-width: 1140px) {
 	width: 30vw;
@@ -61,6 +62,14 @@
 
   .side-menu-container {
 	.nav {
+
+	  li.wpml-ls-menu-item {
+		display: none;
+
+		@media screen and (max-width: 768px) {
+		  display: block;
+		}
+	  }
 
 	  .nav-item {
 
