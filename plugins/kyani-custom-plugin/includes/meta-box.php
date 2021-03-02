@@ -34,7 +34,7 @@ function listing_image_metabox($post) {
 	} else {
 
 		$content = '<img src="" style="width:' . esc_attr($content_width) . 'px;height:auto;border:0;display:none;" />';
-		$content .= '<p class="hide-if-no-js"><p>' . esc_html__('Required Size - (1300px x 890px)', 'text-domain') . '</p><a title="' . esc_attr__('Set listing image', 'text-domain') . '" href="javascript:;" id="upload_listing_image_button" id="set-listing-image" data-uploader_title="' . esc_attr__('Choose an image', 'text-domain') . '" data-uploader_button_text="' . esc_attr__('Set Custom Thumbnail Image', 'text-domain') . '">' . esc_html__('Set Custom Thumbnail Image', 'text-domain') . '</a></p>';
+		$content .= '<p class="hide-if-no-js"><p>' . esc_html__('Required Size - (1300px x 890px)', 'text-domain') . '</p><a title="' . esc_attr__('Set thumbnail image', 'text-domain') . '" href="javascript:;" id="upload_listing_image_button" id="set-listing-image" data-uploader_title="' . esc_attr__('Choose an image', 'text-domain') . '" data-uploader_button_text="' . esc_attr__('Set Custom Thumbnail Image', 'text-domain') . '">' . esc_html__('Set Custom Thumbnail Image', 'text-domain') . '</a></p>';
 		$content .= '<input type="hidden" id="upload_listing_image" name="_listing_cover_image" value="" />';
 
 	}
