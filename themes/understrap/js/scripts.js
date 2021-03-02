@@ -49,5 +49,4 @@ jQuery(document).ready(function ($) {
 		jQuery(this).attr('id', 'upload_listing_image_button');
 		jQuery('#upload_listing_image_button').text('Set thumbnail image');
 	});
-
 });

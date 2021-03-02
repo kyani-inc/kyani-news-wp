@@ -94,6 +94,9 @@ article.news-single-post {
 
 		.card-title {
 		  margin-bottom: 0.5rem;
+		  @media screen and (max-width: 575px) {
+			font-size: 1.125rem;
+		  }
 
 		  a {
 			font-weight: 600;
