@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
 <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch">
 	<div <?php post_class("card"); ?> id="post-<?php the_ID(); ?>">
 		<div class="row">
-			<div class="col-5 col-sm-12">
+			<div class="col-6 col-sm-12">
 				<a href="<?php the_permalink(); ?>">
 					<?php
 					$image_id = get_post_meta($post->ID, "_listing_image_id", true);
@@ -25,7 +25,7 @@ defined('ABSPATH') || exit;
 					?>
 				</a>
 			</div>
-			<div class="col-7 col-sm-12">
+			<div class="col-6 col-sm-12">
 				<div class="card-body">
 					<?php understrap_posted_on(); ?>
 					<h5 class="card-title"><a
