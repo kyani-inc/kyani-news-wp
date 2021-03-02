@@ -9,6 +9,9 @@
 
 $kyani_plugin_includes = array(
 	'/setup.php',
+	'/meta-box.php',
+	'/post-type.php',
+	'/rest-api.php',
 	'/nav-country-switcher.php'
 );
 
