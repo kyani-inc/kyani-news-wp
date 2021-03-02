@@ -24,8 +24,21 @@ article.news-single-post {
 	}
   }
 
-  .single-post-banner{
+  .single-post-banner-full {
 	margin-bottom: 1rem;
+
+	@media (max-width: 768px) {
+	  display: none;
+	}
+  }
+
+  .single-post-banner-mobile {
+	margin-bottom: 1rem;
+	width: 100%;
+
+	@media (min-width: 768px) {
+	  display: none;
+	}
   }
 
   .entry-content {
@@ -45,7 +58,7 @@ article.news-single-post {
 	  box-shadow: 2px 2px 5px 0 #DDDDDD;
 	  margin-bottom: 1.5rem;
 
-	  .row{
+	  .row {
 		padding: 0;
 	  }
 
@@ -58,7 +71,7 @@ article.news-single-post {
 		}
 	  }
 
-	  .card-body{
+	  .card-body {
 		padding: 0.5rem;
 
 		.entry-post-date .entry-date {
@@ -68,6 +81,7 @@ article.news-single-post {
 
 		.card-title {
 		  margin-bottom: 0.5rem;
+
 		  a {
 			font-weight: 600;
 		  }

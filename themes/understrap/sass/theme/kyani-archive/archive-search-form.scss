@@ -4,12 +4,14 @@
 
   .input-group {
 	border-bottom: solid 1px #dddddd;
+
 	.field.form-control {
 	  border: none;
 	  background: none;
 	  border-radius: 0;
 	  outline-color: transparent;
 	  outline-style: none;
+
 	  &:focus {
 		outline-color: transparent;
 		outline-style: none;

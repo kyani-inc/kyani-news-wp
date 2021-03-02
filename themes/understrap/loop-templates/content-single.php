@@ -6,7 +6,7 @@
  */
 
 // Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 ?>
 
 <article <?php post_class('news-single-post'); ?> id="post-<?php the_ID(); ?>">
@@ -19,20 +19,25 @@ defined( 'ABSPATH' ) || exit;
 
 		</div><!-- .entry-meta -->
 
-		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+		<?php the_title('<h1 class="entry-title">', '</h1>'); ?>
 
 		<hr/>
 
-		<div class="entry-social-share">
-			<span><?php echo esc_html__('Share on: ', 'understrap')?></span>
-			<img src="<?php echo esc_url(bloginfo('template_directory') . "/images/facebook.svg") ?>">
-			<img src="<?php echo esc_url(bloginfo('template_directory') . "/images/twitter.svg") ?>">
-			<img src="<?php echo esc_url(bloginfo('template_directory') . "/images/instagram.svg") ?>">
-		</div>
+		<?php understrap_news_social_share() ?>
 
 	</header><!-- .entry-header -->
 
-	<?php echo get_the_post_thumbnail( $post->ID, 'full', array('class'=> 'single-post-banner')); ?>
+	<?php echo get_the_post_thumbnail($post->ID, 'full', array('class' => 'single-post-banner-full')); ?>
+	<?php
+	$image_id = get_post_meta($post->ID, "_listing_image_id", true);
+
+	if (!empty($image_id)) {
+		$image = wp_get_attachment_image($image_id, "full", "", array('class' => 'single-post-banner-mobile'));
+		echo $image;
+	} else {
+		echo get_the_post_thumbnail($post->ID, 'thumbnail', array('class' => 'single-post-banner-mobile'));
+	}
+	?>
 
 	<div class="entry-content">
 
@@ -40,10 +45,10 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php
 		wp_link_pages(
-			array(
-				'before' => '<div class="page-links">' . __( 'Pages:', 'understrap' ),
-				'after'  => '</div>',
-			)
+				array(
+						'before' => '<div class="page-links">' . __('Pages:', 'understrap'),
+						'after' => '</div>',
+				)
 		);
 		?>
 

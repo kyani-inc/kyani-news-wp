@@ -26,7 +26,7 @@ $container = get_theme_mod('understrap_container_type');
 <div class="site" id="page">
 
 	<!-- ******************* The Navbar Area ******************* -->
-	<div id="wrapper-navbar">
+	<div id="wrapper-navbar" style="<?php echo(is_admin_bar_showing() ? 'margin-top: 32px' : ''); ?>">
 
 		<a class="skip-link sr-only sr-only-focusable"
 		   href="#content"><?php esc_html_e('Skip to content', 'understrap'); ?></a>
@@ -69,8 +69,8 @@ $container = get_theme_mod('understrap_container_type');
 							'menu_class' => 'navbar-nav ml-auto',
 							'fallback_cb' => '',
 							'menu_id' => 'main-menu',
-							'depth' => 2,
-							'walker' => new Understrap_WP_Bootstrap_Navwalker(),
+							'depth' => 3,
+							'walker' => new Custom_WP_Bootstrap_Navwalker(),
 					)
 			);
 			?>
@@ -111,12 +111,12 @@ $container = get_theme_mod('understrap_container_type');
 			<div class="side-menu-container">
 				<?php
 				wp_nav_menu(array(
-						'theme_location' => 'slide',
+						'theme_location' => 'side',
 						'container' => false,
 						'menu_class' => 'nav flex-column',
 						'add_li_class' => 'nav-item',
 						'depth' => 3,
-						'walker' => new Understrap_WP_Bootstrap_Navwalker()
+						'walker' => new Custom_WP_Bootstrap_Navwalker()
 				));
 				?>
 			</div>

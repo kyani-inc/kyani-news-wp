@@ -4,7 +4,8 @@
   "description": "WordPress Theme framework",
   "main": "index.js",
   "scripts": {
-    "postinstall": "gulp copy-assets"
+    "postinstall": "gulp copy-assets",
+    "gulp": "gulp watch"
   },
   "engines": {
     "node": "^10 || ^12 || >=14"
