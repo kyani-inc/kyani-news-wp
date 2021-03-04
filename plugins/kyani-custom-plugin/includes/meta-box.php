@@ -50,18 +50,6 @@ function listing_image_save($post_id) {
 	}
 }
 
-function add_admin_scripts($hook) {
-
-	global $post;
-
-	if ($hook == "post-new.php" || $hook == "post.php") {
-		if ("news" === $post->post_type) {
-			wp_enqueue_script("myscript", get_stylesheet_directory_uri() . "/js/scripts.js");
-		}
-	}
-}
-
-add_action("admin_enqueue_scripts", "add_admin_scripts", 10, 1);
 /*
  * End Add meta-box for thumbnail image
  */
@@ -134,7 +122,11 @@ function backoffice_meta_display($post) {
 	$html .= '</p>';
 
 	// Back Office Widget (radio)
-	$html .= '<p>';
+	if ($backoffice_published == 'yes') {
+		$html .= '<div class="reveal-if-active reveal"><p>';
+	} else {
+		$html .= '<div class="reveal-if-active"><p>';
+	}
 	$html .= '<p><strong>Display in BackOffice Widget?</strong></p>';
 	$html .= '<label for="backoffice_widget_published_no">';
 	if ($backoffice_widget_published == 'no' || empty($backoffice_widget_published)) {
@@ -171,7 +163,7 @@ function backoffice_meta_display($post) {
 		$html .= '<input type="radio" name="backoffice_featured_published" id="backoffice_featured_published_yes" value="yes"/>';
 	}
 	$html .= ' Yes</label>';
-	$html .= '</p>';
+	$html .= '</p></div>';
 
 	echo $html;
 
@@ -209,6 +201,22 @@ function sm_meta_save($post_id) {
 	update_post_meta($post_id, 'backoffice_widget_published', $back_office_widget);
 	update_post_meta($post_id, 'backoffice_featured_published', $back_office_featured);
 }
+
 /**
  * End Saves the custom meta input
  */
+
+function add_admin_scripts($hook) {
+
+	global $post;
+
+	if ($hook == "post-new.php" || $hook == "post.php") {
+		if ("news" === $post->post_type) {
+			wp_enqueue_script("myscript", get_stylesheet_directory_uri() . "/js/scripts.js");
+			wp_enqueue_style('mystyles', plugins_url() . '/kyani-custom-plugin/assets/css/styles.css');
+			wp_enqueue_script('metascript', plugins_url() . '/kyani-custom-plugin/assets/js/scripts.js');
+		}
+	}
+}
+
+add_action("admin_enqueue_scripts", "add_admin_scripts", 10, 1);

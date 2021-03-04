@@ -1,0 +1,11 @@
+.reveal-if-active {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.reveal {
+  opacity: 1;
+  overflow: visible;
+  height: auto;
+}

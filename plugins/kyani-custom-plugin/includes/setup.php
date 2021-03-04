@@ -12,6 +12,21 @@ function archive_page_as_front_page($query) {
 		$query->set('page_id', '');
 		$query->is_page = $query->is_singular = 0;
 		$query->is_archive = $query->is_post_type_archive = 1;
+
+		if ($query->get('paged')) {
+			$paged = $query->get('paged');
+		} elseif ($query->get('page')) {
+			$paged = $query->get('page');
+		} else {
+			$paged = 1;
+		}
+		$query->set('paged', $paged);
+		$query->set('meta_query', array(
+			array(
+				'key' => 'post_featured',
+				'value' => 'no'
+			)
+		));
 	}
 }
 

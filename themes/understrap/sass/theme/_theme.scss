@@ -46,3 +46,14 @@ body {
 #wrapper-footer {
   padding: 0;
 }
+
+
+img.wp-post-image, article img, figure, img, #secondary img {
+
+  @media screen and (max-width: 360px) {
+	max-width: 100%;
+	height: 100% !important;
+	object-fit: cover !important;
+  }
+}
+

@@ -1,174 +1,434 @@
 <?php
-
 /*
- * Custom API endpoint
- */
-add_action('rest_api_init', 'register_backoffice_rest_route');
-function register_backoffice_rest_route() {
-	register_rest_route('api', 'backoffice', array(
-		'methods' => 'GET',
-		'callback' => 'get_backoffice_news',
-		'permission_callback' => '__return_true',
-		'args' => get_collection_params()
-	));
-
-	register_rest_route('api', 'backoffice/widget', array(
-		'methods' => 'GET',
-		'callback' => 'get_backoffice_widget',
-		'permission_callback' => '__return_true'
-	));
-
-	register_rest_route('api', 'backoffice/featured', array(
-		'method' => 'GET',
-		'callback' => 'get_backoffice_featured',
-		'permission_callback' => '__return_true'
-	));
-}
-
-// https://news.kyani.com/us/wp-json/api/backoffice
-// this returns posts that are not featured posts in the news report
-function get_backoffice_news($request) {
-	$args = array(
-		'post_type' => 'news',
-		'posts_per_page' => $request['per_page'],
-		'paged' => $request['page'],
-		'meta_query' => array(
-			array(
-				'key' => 'backoffice_published',
-				'value' => 'yes'
-			),
-			array(
-				'key' => 'backoffice_featured_published',
-				'value' => 'no'
-			)
-		),
-		'suppress_filters' => 0
-	);
-
-	$query = new WP_Query($args);
-
-	if (empty($query->posts)) {
-		return new WP_Error('no_posts', __('No post found'), array('status' => 404));
-	}
-
-	$resp = array();
-	$posts = $query->posts;
-	$max_pages = $query->max_num_pages;
-	$total = $query->found_posts;
-
-	foreach ($posts as $post) {
-		$thumbnail_id = get_post_meta($post->ID, "_listing_image_id", true);
-		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, "full");
-		if ($thumbnail_url === false) {
-			$thumbnail_url = get_the_post_thumbnail_url($post->ID, "thumbnail");
-		}
-
-		$resp[$post->ID]['title'] = $post->post_title;
-		$resp[$post->ID]['excerpt'] = get_the_excerpt();
-		$resp[$post->ID]['postedDate'] = $post->post_date;
-		$resp[$post->ID]['thumbnailUrl'] = $thumbnail_url;
-	}
-
-	$response = new WP_REST_Response($resp, 200);
-	$response->header('X-WP-Total', $total);
-	$response->header('X-WP_TotalPages', $max_pages);
-
-	return $response;
-}
-
-function get_backoffice_widget() {
-	$args = array(
-		'post_type' => 'news',
-		'meta_query' => array(
-			array(
-				'key' => 'backoffice_widget_published',
-				'value' => 'yes'
-			),
-		),
-		'suppress_filters' => 0
-	);
-
-	$query = new WP_Query($args);
-
-	if (empty($query->posts)) {
-		return new WP_Error('no_posts', __('No post found'), array('status' => 404));
-	}
-
-	$resp = array();
-	$posts = $query->posts;
-
-	foreach ($posts as $post) {
-		$thumbnail_id = get_post_meta($post->ID, "_listing_image_id", true);
-		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, "full");
-		if ($thumbnail_url === false) {
-			$thumbnail_url = get_the_post_thumbnail_url($post->ID, "thumbnail");
-		}
-
-		$resp[$post->ID]['title'] = $post->post_title;
-		$resp[$post->ID]['postedDate'] = $post->post_date;
-		$resp[$post->ID]['thumbnailUrl'] = $thumbnail_url;
-	}
-
-	return new WP_REST_Response($resp, 200);
-}
-
-function get_backoffice_featured() {
-	$args = array(
-		'post_type' => 'news',
-		'meta_query' => array(
-			array(
-				'key' => 'backoffice_featured_published',
-				'value' => 'yes'
-			)
-		),
-		'suppress_filters' => 0
-	);
-
-	$query = new WP_Query($args);
-
-	if (empty($query->posts)) {
-		return new WP_Error('no_posts', __('No post found'), array('status' => 404));
-	}
-
-	$resp = array();
-	$posts = $query->posts;
-
-	foreach ($posts as $post) {
-		$banner_url = get_the_post_thumbnail_url($post->ID, "full");
-		$thumbnail_id = get_post_meta($post->ID, "_listing_image_id", true);
-		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, "full");
-
-		if ($thumbnail_url === false) {
-			$thumbnail_url = get_the_post_thumbnail_url($post->ID, "thumbnail");
-		}
-
-		$resp[$post->ID]['title'] = $post->post_title;
-		$resp[$post->ID]['postedDate'] = $post->post_date;
-		$resp[$post->ID]['bannerURL'] = $banner_url;
-		$resp[$post->ID]['thumbnailURL'] = $thumbnail_url;
-
-	}
-
-	return new WP_REST_Response($resp, 200);
-}
-
-/*
- * End Custom API endpoint
+ * Custom API Endpoints for BackOffice
  */
 
-function get_collection_params(): array {
-	return array(
-		'page' => array(
-			'description' => 'Current page of the collection.',
-			'type' => 'integer',
-			'default' => 1,
-			'sanitize_callback' => 'absint',
-		),
-		'per_page' => array(
-			'description' => 'Maximum number of items to be returned in result set.',
-			'type' => 'integer',
-			'default' => 20,
-			'sanitize_callback' => 'absint',
-		),
-	);
+class NEWS_ENDPOINT extends WP_REST_Controller
+{
+	private $post_type;
+	private $current_lang;
+	private $language_switched = false;
+	private $data;
+
+	/*
+	 * Constructor
+	 */
+	public function __construct() {
+		$this->namespace = 'api';
+		$this->rest_base = 'backoffice';
+		$this->post_type = 'news';
+	}
+
+	/*
+	 * Register all routes
+	 */
+	public function register_routes() {
+		register_rest_route($this->namespace, $this->rest_base, array(
+			'methods' => WP_REST_Server::READABLE,
+			'callback' => array($this, 'get_backoffice_news'),
+			'permission_callback' => array($this, 'get_items_permissions_check'),
+			'args' => $this->get_collection_params(),
+		));
+
+		register_rest_route($this->namespace, $this->rest_base . '/featured', array(
+			'methods' => WP_REST_Server::READABLE,
+			'callback' => array($this, 'get_backoffice_news_featured'),
+			'permission_callback' => array($this, 'get_items_permissions_check'),
+			'args' => $this->get_collection_params(),
+		));
+
+		register_rest_route($this->namespace, $this->rest_base . '/widget', array(
+			'methods' => WP_REST_Server::READABLE,
+			'callback' => array($this, 'get_backoffice_news_widget'),
+			'permission_callback' => array($this, 'get_items_permissions_check'),
+			'args' => $this->get_collection_params(),
+		));
+	}
+
+	/*
+	 * Retrieve news for back office excluding news that are featured
+	 */
+	public function get_backoffice_news($request) {
+		$args = array(
+			'post_type' => $this->post_type,
+			'posts_per_page' => $request['per_page'],
+			'paged' => $request['page'],
+			'suppress_filters' => 0,
+			'meta_query' => array(
+				array(
+					'key' => 'backoffice_published',
+					'value' => 'yes'
+				),
+				array(
+					'key' => 'backoffice_featured_published',
+					'value' => 'no'
+				)
+			)
+		);
+
+		if ($request['search']) {
+			$args = array_replace($args, array('meta_query' => array('key' => 'backoffice_published', 'value' => 'yes')));
+			$args['s'] = $request['search'];
+		}
+
+		if ($request['post']) {
+			$args = array_replace($args, array('meta_query' => array('key' => 'backoffice_published', 'value' => 'yes')));
+			$args['p'] = $request['post'];
+		}
+
+		// if locale is specified in request change the locale
+		if ($request['locale']) {
+			global $sitepress;
+			$this->current_lang = $sitepress->get_current_language();
+			$wp_locale = $this->get_wp_locale($request['locale']);
+
+			if ($wp_locale && $wp_locale !== $this->current_lang) {
+				$sitepress->switch_lang($wp_locale);
+				$this->language_switched = true;
+			}
+		}
+
+		// use WP Query to get news stories with pagination
+		$query = new WP_Query($args);
+
+		if (empty($query->posts)) {
+			return new WP_Error('no_news', __('No News Stories found'), array('status' => 404));
+		}
+
+		// get all queried news
+		$news = $query->posts;
+
+		// get max number of pages and total number of news stories
+		$max_pages = $query->max_num_pages;
+		$total = $query->found_posts;
+
+		foreach ($news as $story) {
+			$response = $this->prepare_item_for_backoffice_response($story, $request);
+			$this->data[] = $this->prepare_response_for_collection($response);
+		}
+
+		if ($this->language_switched) {
+			global $sitepress;
+			$sitepress->switch_lang($this->current_lang);
+			$this->language_switched = false;
+		}
+
+
+		$response = new WP_REST_Response($this->data, 200);
+		$response->header('X-WP-Total', $total);
+		$response->header('X-WP-TotalPages', $max_pages);
+
+		return $response;
+	}
+
+	/*
+	 * Retrieve news stories that are featured (carousel)
+	 */
+	public function get_backoffice_news_featured($request) {
+		$args = array(
+			'post_type' => $this->post_type,
+			'posts_per_page' => $request['per_page'],
+			'paged' => $request['page'],
+			'suppress_filters' => 0,
+			'meta_query' => array(
+				array(
+					'key' => 'backoffice_published',
+					'value' => 'yes'
+				),
+				array(
+					'key' => 'backoffice_featured_published',
+					'value' => 'yes'
+				)
+			)
+		);
+
+		// use WP Query to get news stories with pagination
+		$query = new WP_Query($args);
+		if ($this->language_switched) {
+			global $sitepress;
+			$sitepress->switch_lang($this->current_lang);
+			$this->language_switched = false;
+		}
+
+		if (empty($query->posts)) {
+			return new WP_Error('no_news', __('No News Stories found'), array('status' => 404));
+		}
+
+		// get all queried news
+		$news = $query->posts;
+
+		// get max number of pages and total number of news stories
+		$max_pages = $query->max_num_pages;
+		$total = $query->found_posts;
+
+		foreach ($news as $story) {
+			$response = $this->prepare_item_for_backoffice_featured_response($story, $request);
+			$this->data[] = $this->prepare_response_for_collection($response);
+		}
+
+		$response = new WP_REST_Response($this->data, 200);
+		$response->header('X-WP-Total', $total);
+		$response->header('X-WP-TotalPages', $max_pages);
+
+		return $response;
+	}
+
+	/*
+	 * Retrieve news stories that are displayed in the back office dashboard
+	 * news widget
+	 */
+	public function get_backoffice_news_widget($request) {
+		$args = array(
+			'post_type' => $this->post_type,
+			'posts_per_page' => $request['per_page'],
+			'paged' => $request['page'],
+			'suppress_filters' => 0,
+			'meta_query' => array(
+				array(
+					'key' => 'backoffice_published',
+					'value' => 'yes'
+				),
+				array(
+					'key' => 'backoffice_widget_published',
+					'value' => 'yes'
+				)
+			)
+		);
+
+		// use WP Query to get news stories with pagination
+		$query = new WP_Query($args);
+		if ($this->language_switched) {
+			global $sitepress;
+			$sitepress->switch_lang($this->current_lang);
+			$this->language_switched = false;
+		}
+
+		if (empty($query->posts)) {
+			return new WP_Error('no_news', __('No News Stories found'), array('status' => 404));
+		}
+
+		// get all queried news
+		$news = $query->posts;
+
+		// get max number of pages and total number of news stories
+		$max_pages = $query->max_num_pages;
+		$total = $query->found_posts;
+
+		foreach ($news as $story) {
+			$response = $this->prepare_item_for_backoffice_widget_response($story, $request);
+			$this->data[] = $this->prepare_response_for_collection($response);
+		}
+
+		$response = new WP_REST_Response($this->data, 200);
+		$response->header('X-WP-Total', $total);
+		$response->header('X-WP-TotalPages', $max_pages);
+
+		return $response;
+	}
+
+	/*
+	 * prepare response for news archive for backoffice
+	 */
+	public function prepare_item_for_backoffice_response($story, $request): array {
+		$thumbnail_id = get_post_meta($story->ID, "_listing_image_id", true);
+		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, "full");
+
+		if ($thumbnail_url === false) {
+			$thumbnail_url = get_the_post_thumbnail_url($story->ID, "thumbnail");
+		}
+
+		if ($request['post']) {
+			return array(
+				'postID' => $story->ID,
+				'title' => $story->post_title,
+				'postedDate' => $story->post_date,
+				'content' => $story->post_content,
+				'thumbnailURL' => $thumbnail_url,
+				'recommendedStories' => $this->get_recommended_stories($story)
+			);
+		}
+
+		return array(
+			'postID' => $story->ID,
+			'title' => $story->post_title,
+			'postedDate' => $story->post_date,
+			'thumbnailURL' => $thumbnail_url,
+			'excerpt' => $this->get_excerpt($story)
+		);
+	}
+
+	/*
+	 * prepare response for featured news stories
+	 */
+	public function prepare_item_for_backoffice_featured_response($story, $request): array {
+		$thumbnail_id = get_post_meta($story->ID, "_listing_image_id", true);
+		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, "full");
+		$banner_url = get_the_post_thumbnail_url($story->ID, "full");
+
+		if ($thumbnail_url === false) {
+			$thumbnail_url = get_the_post_thumbnail_url($story->ID, "thumbnail");
+		}
+
+		return array(
+			'postID' => $story->ID,
+			'title' => $story->post_title,
+			'postedDate' => $story->post_date,
+			'thumbnailURL' => $thumbnail_url,
+			'bannerURL' => $banner_url
+		);
+	}
+
+	/*
+	 * Prepare response for news stories
+	 */
+	public function prepare_item_for_backoffice_widget_response($story, $request): array {
+		$thumbnail_id = get_post_meta($story->ID, "_listing_image_id", true);
+		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, "full");
+
+		if ($thumbnail_url === false) {
+			$thumbnail_url = get_the_post_thumbnail_url($story->ID, "thumbnail");
+		}
+
+		return array(
+			'postID' => $story->ID,
+			'title' => $story->post_title,
+			'postedDate' => $story->post_date,
+			'thumbnailURL' => $thumbnail_url,
+		);
+	}
+
+	/*
+	 * add params that can be passed into the api's, sets default values
+	 */
+	public function get_collection_params(): array {
+		return array(
+			'page' => array(
+				'description' => 'Current page of the collection.',
+				'type' => 'integer',
+				'default' => 1,
+				'sanitize_callback' => 'absint',
+			),
+			'per_page' => array(
+				'description' => 'Maximum number of items to be returned in result set.',
+				'type' => 'integer',
+				'default' => 20,
+				'sanitize_callback' => 'absint',
+			),
+			'locale' => array(
+				'description' => 'Locale for News Posts',
+				'type' => 'string',
+				'default' => '',
+				'sanitize_callback' => 'sanitize_key'
+			),
+			'search' => array(
+				'description' => 'Search for News Posts',
+				'type' => 'string',
+				'default' => '',
+				'sanitize_callback' => 'sanitize_key'
+			),
+			'post' => array(
+				'description' => 'Get News Story by ID',
+				'type' => 'string',
+				'default' => '',
+				'sanitize_callback' => 'sanitize_key'
+			)
+		);
+	}
+
+	/**
+	 * Check if a given request has access to post items.
+	 */
+	public function get_items_permissions_check($request): bool {
+		return true;
+	}
+
+	/*
+ 	* Get wpml locale to retrieve correct news stories
+ 	*/
+	private function get_wp_locale($request_locale): string {
+		$wp_locale = '';
+		$current_site_id = get_current_blog_id();
+		$current_site_country_code = str_replace('/', '', get_blog_details($current_site_id)->path);
+
+		$country_locales = json_decode(file_get_contents(dirname(__DIR__) . '/assets/data/locales/' . $current_site_country_code . '.json'));
+
+		foreach ($country_locales->locales as $locale) {
+			if ($locale->bo_locale === $request_locale) {
+				$wp_locale = $locale->wp_locale;
+			}
+		}
+		return $wp_locale;
+	}
+
+	/*
+	 * Generate excerpt from content if excerpt is not created by user in wp admin dashboard
+	 */
+	private function get_excerpt($story): string {
+		if (!$story->post_excerpt) {
+			$excerpt = $story->post_content;
+			$excerpt = strip_tags($excerpt);
+			$excerpt = strip_shortcodes($excerpt);
+			$excerpt = trim(preg_replace('/\s+/', ' ', $excerpt));
+
+			$excerpt = explode(' ', $excerpt, 12);
+			if (count($excerpt) >= 12) {
+				array_pop($excerpt);
+				$excerpt = implode(" ", $excerpt) . '...';
+			} else {
+				$excerpt = implode(" ", $excerpt);
+			}
+
+			return $excerpt;
+		}
+		return $story->post_excerpt;
+	}
+
+	/*
+	 * Get up to 5 recommended stories
+	 */
+	private function get_recommended_stories($story): array {
+		$recommended_stories = array();
+
+		$tags = wp_get_post_tags($story->ID);
+		if ($tags) {
+			$tags_ids = array();
+
+			foreach ($tags as $tag) {
+				$tags_ids[] = $tag->term_id;
+			}
+
+			$args = array(
+				'tag__in' => $tags_ids,
+				'post_type' => 'news',
+				'post__not_in' => array($story->ID),
+				'posts_per_page' => 5
+			);
+
+			$tags_query = new WP_Query($args);
+			if (!empty($tags_query->posts)) {
+				foreach ($tags_query->posts as $post) {
+					$thumbnail_id = get_post_meta($story->ID, "_listing_image_id", true);
+					$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, "full");
+
+					if ($thumbnail_url === false) {
+						$thumbnail_url = get_the_post_thumbnail_url($story->ID, "thumbnail");
+					}
+
+					$recommended_stories[] = array(
+						'postID' => $post->ID,
+						'title' => $post->post_title,
+						'postedDate' => $post->post_date,
+						'thumbnailURL' => $thumbnail_url,
+						'excerpt' => $this->get_excerpt($post)
+					);
+				}
+			}
+		}
+		return $recommended_stories;
+	}
 }
+
+add_action('rest_api_init', function () {
+	$controller = new NEWS_ENDPOINT();
+	$controller->register_routes();
+});
