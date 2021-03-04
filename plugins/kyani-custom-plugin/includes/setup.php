@@ -21,6 +21,12 @@ function archive_page_as_front_page($query) {
 			$paged = 1;
 		}
 		$query->set('paged', $paged);
+		$query->set('meta_query', array(
+			array(
+				'key' => 'post_featured',
+				'value' => 'no'
+			)
+		));
 	}
 }
 
