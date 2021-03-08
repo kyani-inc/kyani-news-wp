@@ -316,8 +316,15 @@ if (!function_exists('understrap_featured_carousel')) {
 								'value' => 'yes'
 						),
 						array(
-								'key' => 'backoffice_only_published',
-								'value' => 'no'
+								'relation' => 'OR',
+								array(
+										'key' => 'backoffice_only_published',
+										'value' => 'no'
+								),
+								array(
+										'key' => 'backoffice_only_published',
+										'compare' => 'NOT EXISTS'
+								)
 						)
 				)
 		);
