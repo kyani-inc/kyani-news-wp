@@ -25,6 +25,17 @@ function archive_page_as_front_page($query) {
 			array(
 				'key' => 'post_featured',
 				'value' => 'no'
+			),
+			array(
+				'relation' => 'OR',
+				array(
+					'key' => 'backoffice_only_published',
+					'value' => 'no'
+				),
+				array(
+					'key' => 'backoffice_only_published',
+					'compare' => 'NOT EXISTS'
+				)
 			)
 		));
 	}
@@ -33,6 +44,30 @@ function archive_page_as_front_page($query) {
 /*
  * End Function to use the news archive page as the front page
  */
+
+/*
+ * Remove backoffice only posts
+ */
+add_action('pre_get_posts', 'news_only_update');
+function news_only_update($query) {
+	if (!is_admin() && $query->is_main_query()) {
+		if (is_tax() || is_search()) {
+			$query->set('meta_query',
+				array(
+					'relation' => 'OR',
+					array(
+						'key' => 'backoffice_only_published',
+						'value' => 'no'
+					),
+					array(
+						'key' => 'backoffice_only_published',
+						'compare' => 'NOT EXISTS'
+					)
+				)
+			);
+		}
+	}
+}
 
 
 /*

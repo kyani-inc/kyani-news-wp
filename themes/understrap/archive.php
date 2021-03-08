@@ -27,7 +27,7 @@ $container = get_theme_mod('understrap_container_type');
 				<main class="site-main" id="main">
 					<?php get_search_form();
 
-					if (is_post_type_archive()){
+					if (is_post_type_archive()) {
 						understrap_featured_carousel();
 					}
 
@@ -46,9 +46,9 @@ $container = get_theme_mod('understrap_container_type');
 									 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
 									 */
 
-									if ( (is_tax()) || get_post_meta(get_the_ID(), 'post_featured', true) !== "yes"){
-										get_template_part('loop-templates/content', get_post_format());
-									}
+
+									get_template_part('loop-templates/content', get_post_format());
+
 								} ?>
 							</div>
 						</div>

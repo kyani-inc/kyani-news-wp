@@ -310,8 +310,16 @@ if (!function_exists('understrap_featured_carousel')) {
 	function understrap_featured_carousel() {
 		$args = array(
 				'post_type' => 'news',
-				'meta_key' => 'post_featured',
-				'meta_value' => 'yes',
+				'meta_query' => array(
+						array(
+								'key' => 'post_featured',
+								'value' => 'yes'
+						),
+						array(
+								'key' => 'backoffice_only_published',
+								'value' => 'no'
+						)
+				)
 		);
 		$featured = new WP_Query($args);
 
