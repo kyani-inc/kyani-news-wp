@@ -113,8 +113,15 @@ function custom_news_column($column, $post_id) {
 			break;
 	}
 }
+
 /*
  * End Adds column to news post to show which post are featured
  */
 
-
+/*
+ * CORS policy
+ */
+add_action('init', 'add_cors_http_header');
+function add_cors_http_header() {
+	header('Access-Control-Allow-Origin: *');
+}
