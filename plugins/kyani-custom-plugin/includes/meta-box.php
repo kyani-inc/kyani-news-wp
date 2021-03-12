@@ -77,12 +77,13 @@ function backoffice_meta_display($post) {
 	$backoffice_published = get_post_meta($post->ID, 'backoffice_published', true);
 	$backoffice_widget_published = get_post_meta($post->ID, 'backoffice_widget_published', true);
 	$backoffice_featured_published = get_post_meta($post->ID, 'backoffice_featured_published', true);
+	$backoffice_only_published = get_post_meta($post->ID, 'backoffice_only_published', true);
 
 
 	$html = "";
 
 	//Featured post (radio)
-	$html .= '<p>';
+	$html .= '<div class="option-container">';
 	$html .= '<p><strong>Featured Post?</strong></p>';
 	$html .= '<label for="post_featured_no">';
 	if ($post_featured == 'no' || empty($post_featured)) {
@@ -99,10 +100,10 @@ function backoffice_meta_display($post) {
 		$html .= '<input type="radio" name="post_featured" id="post_featured_yes" value="yes"/>';
 	}
 	$html .= ' Yes</label>';
-	$html .= '</p>';
+	$html .= '</div>';
 
 	// Back Office News (radio)
-	$html .= '<p>';
+	$html .= '<div class="option-container">';
 	$html .= '<p><strong>Display in BackOffice?</strong></p>';
 	$html .= '<label for="backoffice_published_no">';
 	if ($backoffice_published == 'no' || empty($backoffice_published)) {
@@ -119,13 +120,13 @@ function backoffice_meta_display($post) {
 		$html .= '<input type="radio" name="backoffice_published" id="backoffice_published_yes" value="yes"/>';
 	}
 	$html .= ' Yes</label>';
-	$html .= '</p>';
+	$html .= '</div>';
 
 	// Back Office Widget (radio)
 	if ($backoffice_published == 'yes') {
-		$html .= '<div class="reveal-if-active reveal"><p>';
+		$html .= '<div class="reveal-if-active reveal"><div class="option-container">';
 	} else {
-		$html .= '<div class="reveal-if-active"><p>';
+		$html .= '<div class="reveal-if-active"><div class="option-container">';
 	}
 	$html .= '<p><strong>Display in BackOffice Widget?</strong></p>';
 	$html .= '<label for="backoffice_widget_published_no">';
@@ -143,10 +144,10 @@ function backoffice_meta_display($post) {
 		$html .= '<input type="radio" name="backoffice_widget_published" id="backoffice_widget_published_yes" value="yes"/>';
 	}
 	$html .= ' Yes</label>';
-	$html .= '</p>';
+	$html .= '</div>';
 
 	// Back Office Featured (radio)
-	$html .= '<p>';
+	$html .= '<div class="option-container">';
 	$html .= '<p><strong>Feature in BackOffice?</strong></p>';
 	$html .= '<label for="backoffice_featured_published_no">';
 	if ($backoffice_featured_published == 'no' || empty($backoffice_featured_published)) {
@@ -163,7 +164,27 @@ function backoffice_meta_display($post) {
 		$html .= '<input type="radio" name="backoffice_featured_published" id="backoffice_featured_published_yes" value="yes"/>';
 	}
 	$html .= ' Yes</label>';
-	$html .= '</p></div>';
+	$html .= '</div>';
+
+	// Back Office Only (radio)
+	$html .= '<div class="option-container">';
+	$html .= '<p><strong>BackOffice Only?</strong></p>';
+	$html .= '<label for="backoffice_only_published_no">';
+	if ($backoffice_only_published == 'no' || empty($backoffice_only_published)) {
+		$html .= '<input type="radio" checked name="backoffice_only_published" id="backoffice_only_published_no" value="no"/>';
+	} else {
+		$html .= '<input type="radio" name="backoffice_only_published" id="backoffice_only_published_no" value="no"/>';
+	}
+	$html .= ' No</label>';
+	$html .= '</br>';
+	$html .= '<label for="backoffice_only_published_yes">';
+	if ($backoffice_only_published == 'yes') {
+		$html .= '<input type="radio" checked name="backoffice_only_published" id="backoffice_only_published_yes" value="yes"/>';
+	} else {
+		$html .= '<input type="radio" name="backoffice_only_published" id="backoffice_only_published_yes" value="yes"/>';
+	}
+	$html .= ' Yes</label>';
+	$html .= '</div></div>';
 
 	echo $html;
 
@@ -195,11 +216,13 @@ function sm_meta_save($post_id) {
 	$back_office = isset($_POST['backoffice_published']) ? sanitize_text_field($_POST['backoffice_published']) : '';
 	$back_office_widget = isset($_POST['backoffice_widget_published']) ? sanitize_text_field($_POST['backoffice_widget_published']) : '';
 	$back_office_featured = isset($_POST['backoffice_featured_published']) ? sanitize_text_field($_POST['backoffice_featured_published']) : '';
+	$back_office_only = isset($_POST['backoffice_only_published']) ? sanitize_text_field($_POST['backoffice_only_published']) : '';
 
 	update_post_meta($post_id, 'post_featured', $featured_post);
 	update_post_meta($post_id, 'backoffice_published', $back_office);
 	update_post_meta($post_id, 'backoffice_widget_published', $back_office_widget);
 	update_post_meta($post_id, 'backoffice_featured_published', $back_office_featured);
+	update_post_meta($post_id, 'backoffice_only_published', $back_office_only);
 }
 
 /**

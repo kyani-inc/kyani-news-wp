@@ -9,3 +9,7 @@
   overflow: visible;
   height: auto;
 }
+
+.option-container {
+  margin: 15px 0;
+}

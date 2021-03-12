@@ -232,6 +232,7 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 	public function prepare_item_for_backoffice_response($story, $request): array {
 		$thumbnail_id = get_post_meta($story->ID, "_listing_image_id", true);
 		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, "full");
+		$banner_url = get_the_post_thumbnail_url($story->ID, "full");
 
 		if ($thumbnail_url === false) {
 			$thumbnail_url = get_the_post_thumbnail_url($story->ID, "thumbnail");
@@ -244,6 +245,7 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 				'postedDate' => $story->post_date,
 				'content' => $story->post_content,
 				'thumbnailURL' => $thumbnail_url,
+				'bannerURL' => $banner_url,
 				'recommendedStories' => $this->get_recommended_stories($story)
 			);
 		}
@@ -324,7 +326,6 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 				'description' => 'Search for News Posts',
 				'type' => 'string',
 				'default' => '',
-				'sanitize_callback' => 'sanitize_key'
 			),
 			'post' => array(
 				'description' => 'Get News Story by ID',
