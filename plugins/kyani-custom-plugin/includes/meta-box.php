@@ -83,7 +83,7 @@ function backoffice_meta_display($post) {
 	$html = "";
 
 	//Featured post (radio)
-	$html .= '<p>';
+	$html .= '<div class="option-container">';
 	$html .= '<p><strong>Featured Post?</strong></p>';
 	$html .= '<label for="post_featured_no">';
 	if ($post_featured == 'no' || empty($post_featured)) {
@@ -100,10 +100,10 @@ function backoffice_meta_display($post) {
 		$html .= '<input type="radio" name="post_featured" id="post_featured_yes" value="yes"/>';
 	}
 	$html .= ' Yes</label>';
-	$html .= '</p>';
+	$html .= '</div>';
 
 	// Back Office News (radio)
-	$html .= '<p>';
+	$html .= '<div class="option-container">';
 	$html .= '<p><strong>Display in BackOffice?</strong></p>';
 	$html .= '<label for="backoffice_published_no">';
 	if ($backoffice_published == 'no' || empty($backoffice_published)) {
@@ -120,13 +120,13 @@ function backoffice_meta_display($post) {
 		$html .= '<input type="radio" name="backoffice_published" id="backoffice_published_yes" value="yes"/>';
 	}
 	$html .= ' Yes</label>';
-	$html .= '</p>';
+	$html .= '</div>';
 
 	// Back Office Widget (radio)
 	if ($backoffice_published == 'yes') {
-		$html .= '<div class="reveal-if-active reveal"><p>';
+		$html .= '<div class="reveal-if-active reveal"><div class="option-container">';
 	} else {
-		$html .= '<div class="reveal-if-active"><p>';
+		$html .= '<div class="reveal-if-active"><div class="option-container">';
 	}
 	$html .= '<p><strong>Display in BackOffice Widget?</strong></p>';
 	$html .= '<label for="backoffice_widget_published_no">';
@@ -144,10 +144,10 @@ function backoffice_meta_display($post) {
 		$html .= '<input type="radio" name="backoffice_widget_published" id="backoffice_widget_published_yes" value="yes"/>';
 	}
 	$html .= ' Yes</label>';
-	$html .= '</p>';
+	$html .= '</div>';
 
 	// Back Office Featured (radio)
-	$html .= '<p>';
+	$html .= '<div class="option-container">';
 	$html .= '<p><strong>Feature in BackOffice?</strong></p>';
 	$html .= '<label for="backoffice_featured_published_no">';
 	if ($backoffice_featured_published == 'no' || empty($backoffice_featured_published)) {
@@ -164,10 +164,10 @@ function backoffice_meta_display($post) {
 		$html .= '<input type="radio" name="backoffice_featured_published" id="backoffice_featured_published_yes" value="yes"/>';
 	}
 	$html .= ' Yes</label>';
-	$html .= '</p></div>';
+	$html .= '</div>';
 
 	// Back Office Only (radio)
-	$html .= '<p>';
+	$html .= '<div class="option-container">';
 	$html .= '<p><strong>BackOffice Only?</strong></p>';
 	$html .= '<label for="backoffice_only_published_no">';
 	if ($backoffice_only_published == 'no' || empty($backoffice_only_published)) {
@@ -184,7 +184,7 @@ function backoffice_meta_display($post) {
 		$html .= '<input type="radio" name="backoffice_only_published" id="backoffice_only_published_yes" value="yes"/>';
 	}
 	$html .= ' Yes</label>';
-	$html .= '</p></div>';
+	$html .= '</div></div>';
 
 	echo $html;
 
