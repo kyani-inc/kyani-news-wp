@@ -326,7 +326,6 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 				'description' => 'Search for News Posts',
 				'type' => 'string',
 				'default' => '',
-				'sanitize_callback' => 'sanitize_key'
 			),
 			'post' => array(
 				'description' => 'Get News Story by ID',
