@@ -49,10 +49,24 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 	 * Retrieve news for back office excluding news that are featured
 	 */
 	public function get_backoffice_news($request) {
-		$args = array(
+
+		// if locale is specified in request change the locale
+		if ($request['locale']) {
+			global $sitepress;
+			$this->current_lang = $sitepress->get_current_language();
+			$wp_locale = $this->get_wp_locale($request['locale']);
+
+			if ($wp_locale && $wp_locale !== $this->current_lang) {
+				$sitepress->switch_lang($wp_locale);
+				$this->language_switched = true;
+			}
+		}
+
+		// retrieve 5 featured posts that will be excluded from the archived posts
+		$featured_args = array(
 			'post_type' => $this->post_type,
-			'posts_per_page' => $request['per_page'],
-			'paged' => $request['page'],
+			'posts_per_page' => 5,
+			'no_found_rows' => true,
 			'suppress_filters' => 0,
 			'meta_query' => array(
 				array(
@@ -61,8 +75,31 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 				),
 				array(
 					'key' => 'backoffice_featured_published',
-					'value' => 'no'
+					'value' => 'yes'
 				)
+			)
+		);
+
+		$featured_query = new WP_Query($featured_args);
+		$featured_ids = array();
+		if (!empty($featured_query->posts)) {
+			foreach ($featured_query->posts as $post) {
+				$featured_ids[] = $post->ID;
+			}
+		}
+
+
+		$args = array(
+			'post_type' => $this->post_type,
+			'posts_per_page' => $request['per_page'],
+			'paged' => $request['page'],
+			'suppress_filters' => 0,
+			'post__not_in' => $featured_ids,
+			'meta_query' => array(
+				array(
+					'key' => 'backoffice_published',
+					'value' => 'yes'
+				),
 			)
 		);
 
@@ -76,17 +113,6 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 			$args['p'] = $request['post'];
 		}
 
-		// if locale is specified in request change the locale
-		if ($request['locale']) {
-			global $sitepress;
-			$this->current_lang = $sitepress->get_current_language();
-			$wp_locale = $this->get_wp_locale($request['locale']);
-
-			if ($wp_locale && $wp_locale !== $this->current_lang) {
-				$sitepress->switch_lang($wp_locale);
-				$this->language_switched = true;
-			}
-		}
 
 		// use WP Query to get news stories with pagination
 		$query = new WP_Query($args);
@@ -127,8 +153,8 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 	public function get_backoffice_news_featured($request) {
 		$args = array(
 			'post_type' => $this->post_type,
-			'posts_per_page' => $request['per_page'],
-			'paged' => $request['page'],
+			'posts_per_page' => 5,
+			'no_found_rows' => true,
 			'suppress_filters' => 0,
 			'meta_query' => array(
 				array(
@@ -142,8 +168,21 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 			)
 		);
 
+		// if locale is specified in request change the locale
+		if ($request['locale']) {
+			global $sitepress;
+			$this->current_lang = $sitepress->get_current_language();
+			$wp_locale = $this->get_wp_locale($request['locale']);
+
+			if ($wp_locale && $wp_locale !== $this->current_lang) {
+				$sitepress->switch_lang($wp_locale);
+				$this->language_switched = true;
+			}
+		}
+
 		// use WP Query to get news stories with pagination
 		$query = new WP_Query($args);
+
 		if ($this->language_switched) {
 			global $sitepress;
 			$sitepress->switch_lang($this->current_lang);
@@ -178,11 +217,29 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 	 * news widget
 	 */
 	public function get_backoffice_news_widget($request) {
+		// get last two months
+		$today = getdate();
+		$twomonths = $today["mon"] - 2;
+
 		$args = array(
 			'post_type' => $this->post_type,
 			'posts_per_page' => $request['per_page'],
 			'paged' => $request['page'],
 			'suppress_filters' => 0,
+			'date_query' => array(
+				array(
+					'after' => array(
+						'year' => $today['year'],
+						'month' => $twomonths,
+						'day' => $today['mday'],
+					),
+					'before' => array(
+						'year' => $today["year"],
+						'month' => $today["mon"],
+						'day' => $today["mday"],
+					)
+				)
+			),
 			'meta_query' => array(
 				array(
 					'key' => 'backoffice_published',
@@ -194,6 +251,19 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 				)
 			)
 		);
+
+		// if locale is specified in request change the locale
+		if ($request['locale']) {
+			global $sitepress;
+			$this->current_lang = $sitepress->get_current_language();
+			$wp_locale = $this->get_wp_locale($request['locale']);
+
+			if ($wp_locale && $wp_locale !== $this->current_lang) {
+				$sitepress->switch_lang($wp_locale);
+				$this->language_switched = true;
+			}
+		}
+
 
 		// use WP Query to get news stories with pagination
 		$query = new WP_Query($args);
@@ -276,7 +346,8 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 			'title' => $story->post_title,
 			'postedDate' => $story->post_date,
 			'thumbnailURL' => $thumbnail_url,
-			'bannerURL' => $banner_url
+			'bannerURL' => $banner_url,
+			'excerpt' => $this->get_excerpt($story)
 		);
 	}
 
