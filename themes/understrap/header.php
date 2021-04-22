@@ -92,11 +92,11 @@ $container = get_theme_mod('understrap_container_type');
 			wp_nav_menu(
 					array(
 							'theme_location' => 'secondary',
-							'container_class' => 'navbar',
+							'container_class' => 'collapse navbar-collapse justify-content-center',
 							'container_id' => 'navbarNavDropdown',
-							'menu_class' => 'navbar-nav mx-auto',
+							'menu_class' => 'navbar-nav align-self-end flex-wrap',
 							'fallback_cb' => '',
-							'menu_id' => 'secondary-menu',
+							'menu_id' => 'nav',
 							'depth' => 1,
 							'walker' => new Understrap_WP_Bootstrap_Navwalker(),
 					)
