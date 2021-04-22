@@ -1,12 +1,14 @@
 <?php
 /*
- * Custom navigation country switcher for Kyani
- */
+* Custom navigation country switcher for Kyani
+*/
 
 add_filter('wp_nav_menu_items', 'add_country_selector_to_menu', 10, 2);
-function add_country_selector_to_menu($items, $args) {
+function add_country_selector_to_menu($items, $args)
+{
 	$sites = get_sites(['public' => 1]);
 	$current_site_id = get_current_blog_id();
+
 	$new_nav_item = "";
 	$items_array = array();
 
@@ -44,7 +46,8 @@ function add_country_selector_to_menu($items, $args) {
 }
 
 add_filter('wp_nav_menu_items', 'add_country_selector_to_mobile', 10, 2);
-function add_country_selector_to_mobile($items, $args) {
+function add_country_selector_to_mobile($items, $args)
+{
 	$sites = get_sites(['public' => 1]);
 	$new_nav_item = "";
 
@@ -59,7 +62,8 @@ function add_country_selector_to_mobile($items, $args) {
 	return $new_nav_item . $items;
 }
 
-function buildDropdownItems($sites) {
+function buildDropdownItems($sites)
+{
 	$country_websites = json_decode(file_get_contents(dirname(__DIR__) . '/assets/data/sites.json'));
 	$dropdownItems = '';
 
@@ -76,7 +80,7 @@ function buildDropdownItems($sites) {
 			if ($country->code == 'cn') {
 				$dropdownItems .= "<a class='dropdown-item' href='" . $country->url . "'><img class='nav-country-flag' src='" . plugins_url() . '/kyani-custom-plugin/assets/images/flags/' . $country->code . ".svg' width='24'>" . $country->display_name . "</a>";
 			} else {
-				$dropdownItems .= "<a class='dropdown-item' href='//" . $country->url . "'><img class='nav-country-flag' src='" . plugins_url() . '/kyani-custom-plugin/assets/images/flags/' . $country->code . ".svg' width='24'>" . $country->display_name . "</a>";
+				$dropdownItems .= "<a class='dropdown-item' href='" . $country->url . "'><img class='nav-country-flag' src='" . plugins_url() . '/kyani-custom-plugin/assets/images/flags/' . $country->code . ".svg' width='24'>" . $country->display_name . "</a>";
 			}
 		}
 
