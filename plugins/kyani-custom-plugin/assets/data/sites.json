@@ -40,7 +40,7 @@
         },
         {
           "code": "pr",
-          "url": "/pr/es-mx",
+          "url": "/pr/",
           "display_name": "Puerto Rico"
         }
       ]
@@ -205,7 +205,7 @@
         },
         {
           "code": "gb",
-          "url": "/gb/en-gb",
+          "url": "/gb/",
           "display_name": "United Kingdom"
         }
       ]
@@ -215,17 +215,17 @@
       "countries": [
         {
           "code": "cn",
-          "url": "https://kyani.cn",
+          "url": "/cn/",
           "display_name": "China"
         },
         {
           "code": "hk",
-          "url": "/hk/zh-hk",
+          "url": "/hk/",
           "display_name": "Hong Kong"
         },
         {
           "code": "mo",
-          "url": "/mo/zh-hk",
+          "url": "/mo/",
           "display_name": "Macau"
         },
         {
@@ -250,17 +250,17 @@
         },
         {
           "code": "jp",
-          "url": "/jp/ja-jp",
+          "url": "/jp/",
           "display_name": "Japan"
         },
         {
           "code": "kr",
-          "url": "/kr/ko-kr",
+          "url": "/kr/",
           "display_name": "Korea"
         },
         {
           "code": "my",
-          "url": "/my/en-sg",
+          "url": "/my/",
           "display_name": "Malaysia"
         },
         {
@@ -275,12 +275,12 @@
         },
         {
           "code": "sg",
-          "url": "/sg/en-sg",
+          "url": "/sg/",
           "display_name": "Singapore"
         },
         {
           "code": "th",
-          "url": "/th/th-th",
+          "url": "/th/",
           "display_name": "Thailand"
         },
         {
