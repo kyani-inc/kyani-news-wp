@@ -52,13 +52,15 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 
 		// if locale is specified in request change the locale
 		if ($request['locale']) {
-			global $sitepress;
-			$this->current_lang = $sitepress->get_current_language();
-			$wp_locale = $this->get_wp_locale($request['locale']);
+			if (class_exists('SitePress')) {
+				global $sitepress;
+				$this->current_lang = $sitepress->get_current_language();
+				$wp_locale = $this->get_wp_locale($request['locale']);
 
-			if ($wp_locale && $wp_locale !== $this->current_lang) {
-				$sitepress->switch_lang($wp_locale);
-				$this->language_switched = true;
+				if ($wp_locale && $wp_locale !== $this->current_lang) {
+					$sitepress->switch_lang($wp_locale);
+					$this->language_switched = true;
+				}
 			}
 		}
 
@@ -170,13 +172,15 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 
 		// if locale is specified in request change the locale
 		if ($request['locale']) {
-			global $sitepress;
-			$this->current_lang = $sitepress->get_current_language();
-			$wp_locale = $this->get_wp_locale($request['locale']);
+			if (class_exists('SitePress')) {
+				global $sitepress;
+				$this->current_lang = $sitepress->get_current_language();
+				$wp_locale = $this->get_wp_locale($request['locale']);
 
-			if ($wp_locale && $wp_locale !== $this->current_lang) {
-				$sitepress->switch_lang($wp_locale);
-				$this->language_switched = true;
+				if ($wp_locale && $wp_locale !== $this->current_lang) {
+					$sitepress->switch_lang($wp_locale);
+					$this->language_switched = true;
+				}
 			}
 		}
 
@@ -254,13 +258,15 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 
 		// if locale is specified in request change the locale
 		if ($request['locale']) {
-			global $sitepress;
-			$this->current_lang = $sitepress->get_current_language();
-			$wp_locale = $this->get_wp_locale($request['locale']);
+			if (class_exists('SitePress')) {
+				global $sitepress;
+				$this->current_lang = $sitepress->get_current_language();
+				$wp_locale = $this->get_wp_locale($request['locale']);
 
-			if ($wp_locale && $wp_locale !== $this->current_lang) {
-				$sitepress->switch_lang($wp_locale);
-				$this->language_switched = true;
+				if ($wp_locale && $wp_locale !== $this->current_lang) {
+					$sitepress->switch_lang($wp_locale);
+					$this->language_switched = true;
+				}
 			}
 		}
 
