@@ -168,6 +168,18 @@
 	background-color: #001f40;
 	margin: 0 auto;
 
+	&.desktop {
+	  @media screen and (max-width: 900px) {
+		display: none;
+	  }
+	}
+
+	&.mobile {
+	  @media screen and (min-width: 900px) {
+		display: none;
+	  }
+	}
+
 	::-webkit-scrollbar {
 	  width: 0;
 	  height: 0
@@ -235,3 +247,5 @@
 	color: white !important;
   }
 }
+
+
