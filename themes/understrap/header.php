@@ -87,14 +87,14 @@ $container = get_theme_mod('understrap_container_type');
 		</nav><!-- .site-navigation -->
 
 		<!-- Secondary Nav .second-nav -->
-		<nav class="navbar-expand navbar-dark second-nav">
+		<nav class="navbar-expand navbar-dark second-nav desktop p-1">
 			<?php
 			wp_nav_menu(
 					array(
 							'theme_location' => 'secondary',
-							'container_class' => 'collapse navbar-collapse justify-content-center',
+							'container_class' => 'secondary-menu-container navbar-collapse collapse justify-content-center',
 							'container_id' => 'navbarNavDropdown',
-							'menu_class' => 'navbar-nav align-self-end flex-wrap',
+							'menu_class' => 'navbar-nav align-self-end flex-wrap ',
 							'fallback_cb' => '',
 							'menu_id' => 'nav',
 							'depth' => 1,
@@ -102,6 +102,24 @@ $container = get_theme_mod('understrap_container_type');
 					)
 			);
 			?>
+		</nav>
+		<nav class="navbar-expand navbar-dark second-nav mobile">
+			<?php
+			wp_nav_menu(
+					array(
+							'theme_location' => 'secondary',
+							'container_class' => 'navbar',
+							'container_id' => 'navbarNavDropdown',
+							'menu_class' => 'navbar-nav mx-auto',
+							'fallback_cb' => '',
+							'menu_id' => 'secondary-menu',
+							'depth' => 1,
+							'walker' => new Understrap_WP_Bootstrap_Navwalker(),
+					)
+			);
+			?>
+
+		</nav>
 
 		</nav>
 		<!-- Secondary Nav .second-nav-->
