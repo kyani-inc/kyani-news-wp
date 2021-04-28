@@ -485,11 +485,11 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 			$tags_query = new WP_Query($args);
 			if (!empty($tags_query->posts)) {
 				foreach ($tags_query->posts as $post) {
-					$thumbnail_id = get_post_meta($story->ID, "_listing_image_id", true);
+					$thumbnail_id = get_post_meta($post->ID, "_listing_image_id", true);
 					$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, "full");
 
 					if ($thumbnail_url === false) {
-						$thumbnail_url = get_the_post_thumbnail_url($story->ID, "thumbnail");
+						$thumbnail_url = get_the_post_thumbnail_url($post->ID, "thumbnail");
 					}
 
 					$recommended_stories[] = array(
