@@ -232,6 +232,7 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 			'suppress_filters' => 0,
 			'date_query' => array(
 				array(
+					'column', 'post_date',
 					'after' => array(
 						'year' => $today['year'],
 						'month' => $twomonths,
