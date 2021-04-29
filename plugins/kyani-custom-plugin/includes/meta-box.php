@@ -199,13 +199,24 @@ function backoffice_meta_display($post) {
  * Saves the custom meta input
  */
 add_action('save_post', 'sm_meta_save');
-function sm_meta_save($post_id) {
+function sm_meta_save() {
+	global $post;
+	$post_id = $post->ID;
 
 	// Checks save status
 	$is_autosave = wp_is_post_autosave($post_id);
 	$is_revision = wp_is_post_revision($post_id);
 
 	$is_valid_nonce = (isset($_POST['sm_nonce']) && wp_verify_nonce($_POST['sm_nonce'], basename(__FILE__))) ? 'true' : 'false';
+
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+		return;
+	}
+
+	//Don't update on Quick Edit
+	if (defined('DOING_AJAX')) {
+		return;
+	}
 
 	// Exits script depending on save status
 	if ($is_autosave || $is_revision || !$is_valid_nonce) {
@@ -224,6 +235,10 @@ function sm_meta_save($post_id) {
 	update_post_meta($post_id, 'backoffice_featured_published', $back_office_featured);
 	update_post_meta($post_id, 'backoffice_only_published', $back_office_only);
 }
+
+add_action('future_to_publish', function ($post) {
+	remove_action('save_post', 'sm_meta_save');
+});
 
 /**
  * End Saves the custom meta input

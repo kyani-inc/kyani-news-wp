@@ -228,10 +228,10 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 			'posts_per_page' => $request['per_page'],
 			'paged' => $request['page'],
 			'suppress_filters' => 0,
-			'date_query' => array(
-				'column' => 'post_date',
-				'after' => '- 60 day'
-			),
+//			'date_query' => array(
+//				'column' => 'post_date',
+//				'after' => '- 60 day'
+//			),
 			'meta_query' => array(
 				array(
 					'key' => 'backoffice_published',
