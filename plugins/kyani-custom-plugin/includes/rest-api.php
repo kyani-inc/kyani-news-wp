@@ -236,8 +236,6 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 			}
 		}
 		// get last two months
-		$today = getdate();
-		$twomonths = $today["mon"] - 2;
 
 		$args = array(
 			'post_type' => $this->post_type,
@@ -245,18 +243,8 @@ class NEWS_ENDPOINT extends WP_REST_Controller
 			'paged' => $request['page'],
 			'suppress_filters' => 0,
 //			'date_query' => array(
-//				array(
-//					'after' => array(
-//						'year' => $today['year'],
-//						'month' => $twomonths,
-//						'day' => $today['mday'],
-//					),
-//					'before' => array(
-//						'year' => $today["year"],
-//						'month' => $today["mon"],
-//						'day' => $today["mday"],
-//					)
-//				)
+//				'column' => 'post_date',
+//				'after' => '- 60 day'
 //			),
 			'meta_query' => array(
 				array(
