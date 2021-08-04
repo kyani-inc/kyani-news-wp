@@ -12,7 +12,8 @@ $kyani_plugin_includes = array(
 	'/meta-box.php',
 	'/post-type.php',
 	'/rest-api.php',
-	'/nav-country-switcher.php'
+	'/nav-country-switcher.php',
+	'/dynamic-year.php'
 );
 
 foreach ($kyani_plugin_includes as $file) {
