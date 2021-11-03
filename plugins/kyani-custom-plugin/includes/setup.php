@@ -4,7 +4,8 @@
  * Function to use the news archive page as the front page
  */
 add_action('pre_get_posts', 'archive_page_as_front_page');
-function archive_page_as_front_page($query) {
+function archive_page_as_front_page($query)
+{
 	if (is_admin()) return;
 
 	if ($query->get('page_id') == get_option('page_on_front')) {
@@ -49,10 +50,15 @@ function archive_page_as_front_page($query) {
  * Remove backoffice only posts
  */
 add_action('pre_get_posts', 'news_only_update');
-function news_only_update($query) {
+function news_only_update($query)
+{
 	if (!is_admin() && $query->is_main_query()) {
-		if (is_tax() || is_search()) {
-			$query->set('meta_query',
+		if (!is_front_page() && !is_tax() && !is_search()) {
+			$query->set('meta_query', array(
+				array(
+					'key' => 'post_featured',
+					'value' => 'no'
+				),
 				array(
 					'relation' => 'OR',
 					array(
@@ -64,17 +70,31 @@ function news_only_update($query) {
 						'compare' => 'NOT EXISTS'
 					)
 				)
-			);
+			));
+		} else if (is_tax() || is_search()) {
+			$query->set('meta_query', array(
+				array(
+					'relation' => 'OR',
+					array(
+						'key' => 'backoffice_only_published',
+						'value' => 'no'
+					),
+					array(
+						'key' => 'backoffice_only_published',
+						'compare' => 'NOT EXISTS'
+					)
+				)
+			));
 		}
 	}
 }
-
 
 /*
  * Adds column to news post to show which post are featured
  */
 add_filter('manage_news_posts_columns', 'set_custom_edit_news_columns');
-function set_custom_edit_news_columns($columns) {
+function set_custom_edit_news_columns($columns)
+{
 	unset($columns['news_featured_post']);
 	$columns['news_featured_post'] = __('Featured Post', 'your_text_domain');
 
@@ -86,7 +106,8 @@ function set_custom_edit_news_columns($columns) {
 
 // Add the data to the custom columns for the book post type:
 add_action('manage_news_posts_custom_column', 'custom_news_column', 10, 2);
-function custom_news_column($column, $post_id) {
+function custom_news_column($column, $post_id)
+{
 	switch ($column) {
 
 		case 'news_featured_post' :
@@ -122,6 +143,7 @@ function custom_news_column($column, $post_id) {
  * CORS policy
  */
 add_action('init', 'add_cors_http_header');
-function add_cors_http_header() {
+function add_cors_http_header()
+{
 	header('Access-Control-Allow-Origin: *');
 }
