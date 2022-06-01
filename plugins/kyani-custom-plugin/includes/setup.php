@@ -53,7 +53,7 @@ add_action('pre_get_posts', 'news_only_update');
 function news_only_update($query)
 {
 	if (!is_admin() && $query->is_main_query()) {
-		if (is_front_page() && !is_tax() && !is_search()) {
+		if (!is_front_page() && !is_single() && !is_tax() && !is_search()) {
 			$query->set('meta_query', array(
 				array(
 					'key' => 'post_featured',
