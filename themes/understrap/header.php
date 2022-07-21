@@ -12,6 +12,7 @@ defined('ABSPATH') || exit;
 
 $container = get_theme_mod('understrap_container_type');
 ?>
+<!-- Hotjar Tracking Code for https://news.kyani.com -->
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -19,6 +20,40 @@ $container = get_theme_mod('understrap_container_type');
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<?php wp_head(); ?>
+	<script>
+		function setCookie(sname, svalue, days) {
+			const d = new Date();
+			d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+			let expires = "expires=" + d.toUTCString();
+			document.cookie = sname + "=" + svalue + ";" + expires + ";path=/;domain=kyani.com";
+		}
+
+		function getCookie(sname) {
+			let name = sname + "=";
+			let sa = document.cookie.split(";");
+			for (let i = 0; i < sa.length; i++) {
+				let s = sa[i];
+				while (s.charAt(0) == " ") {
+					s = s.substring(1);
+				}
+				if (s.indexOf(name) == 0) {
+					return s.substring(name.length, s.length);
+				}
+			}
+			return "";
+		}
+
+		if (getCookie("viewed_cookie_policy") == "yes") {
+			(function(h,o,t,j,a,r){
+				h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+				h._hjSettings={hjid:3073526,hjsv:6};
+				a=o.getElementsByTagName('head')[0];
+				r=o.createElement('script');r.async=1;
+				r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+				a.appendChild(r);
+			})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+		}
+	</script>
 </head>
 
 <body <?php body_class(); ?> <?php understrap_body_attributes(); ?>>
