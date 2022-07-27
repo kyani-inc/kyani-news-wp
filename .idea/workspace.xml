@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="173ff531-7b2c-4340-9d2b-136df0f3d444" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/plugins/kyani-custom-plugin-SAP/assets/data/sites.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/kyani-custom-plugin-SAP/assets/data/sites.json" afterDir="false" />
-    </list>
+    <list default="true" id="173ff531-7b2c-4340-9d2b-136df0f3d444" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,7 +51,7 @@
       <updated>1658516787169</updated>
       <workItem from="1658516789342" duration="7484000" />
       <workItem from="1658945752514" duration="2746000" />
-      <workItem from="1658948717153" duration="1567000" />
+      <workItem from="1658948717153" duration="2098000" />
     </task>
     <servers />
   </component>
