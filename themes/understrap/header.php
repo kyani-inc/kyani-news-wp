@@ -44,14 +44,14 @@ $container = get_theme_mod('understrap_container_type');
 		}
 
 		if (getCookie("viewed_cookie_policy") == "yes") {
-			(function(h,o,t,j,a,r){
-				h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-				h._hjSettings={hjid:3073526,hjsv:6};
-				a=o.getElementsByTagName('head')[0];
-				r=o.createElement('script');r.async=1;
-				r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-				a.appendChild(r);
-			})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+			// (function(h,o,t,j,a,r){
+			// 	h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+			// 	h._hjSettings={hjid:3073526,hjsv:6};
+			// 	a=o.getElementsByTagName('head')[0];
+			// 	r=o.createElement('script');r.async=1;
+			// 	r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+			// 	a.appendChild(r);
+			// })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 		}
 	</script>
 </head>
@@ -122,7 +122,7 @@ $container = get_theme_mod('understrap_container_type');
 		</nav><!-- .site-navigation -->
 
 		<!-- Secondary Nav .second-nav -->
-		<nav class="navbar-expand navbar-dark second-nav desktop p-1">
+		<nav class="navbar-expand second-nav desktop p-1">
 			<?php
 			wp_nav_menu(
 					array(
@@ -138,7 +138,7 @@ $container = get_theme_mod('understrap_container_type');
 			);
 			?>
 		</nav>
-		<nav class="navbar-expand navbar-dark second-nav mobile">
+		<nav class="navbar-expand second-nav mobile">
 			<?php
 			wp_nav_menu(
 					array(
