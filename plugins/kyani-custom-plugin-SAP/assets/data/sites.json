@@ -113,30 +113,6 @@
               "url": "en/"
             }
           ]
-        },
-        {
-          "code": "cl",
-          "url": "/cl/",
-          "display_name": "Chile",
-          "events_name": "/es/chile/",
-          "languages": [
-            {
-              "name": "Spanish",
-              "url": ""
-            }
-          ]
-        },
-        {
-          "code": "gt",
-          "url": "/gt/",
-          "display_name": "Guatemala",
-          "events_name": "/es/guatemala/",
-          "languages": [
-            {
-              "name": "Spanish",
-              "url": ""
-            }
-          ]
         }
       ]
     },
