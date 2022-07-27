@@ -1,6 +1,6 @@
 <?php
 /*
- * Plugin Name: Kyani Custom Configuration
+ * Plugin Name: Kyani Custom Configuration - SAP
  * Description: This plugin creates custom post types, fields, and functionality needed by Kyani.
  * Version: 1.0
  * Author: Kyani Corp.
