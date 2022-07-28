@@ -1,0 +1,818 @@
+{
+  "regions": [
+    {
+      "name": "North America",
+      "className": "northamerica",
+      "countries": [
+        {
+          "code": "ca",
+          "url": "/ca/",
+          "display_name": "Canada",
+          "events_name": "/en/canada/",
+          "languages": [
+            {
+              "name": "Chinese",
+              "url": "zh/"
+            },
+            {
+              "name": "English",
+              "url": ""
+            },
+            {
+              "name": "French",
+              "url": "fr/"
+            }
+          ]
+        },
+        {
+          "code": "us",
+          "url": "/us/",
+          "display_name": "USA",
+          "events_name": "/en/usa/",
+          "languages": [
+            {
+              "name": "Chinese",
+              "url": "zh/"
+            },
+            {
+              "name": "English",
+              "url": ""
+            },
+            {
+              "name": "Spanish",
+              "url": "es/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Central & South America",
+      "className": "centralamerica",
+      "countries": [
+        {
+          "code": "co",
+          "url": "/co/",
+          "display_name": "Colombia",
+          "events_name": "/es/colombia/",
+          "languages": [
+            {
+              "name": "Spanish",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "do",
+          "url": "/do/",
+          "display_name": "Dominican Republic",
+          "events_name": "/es/dominican-republic/",
+          "languages": [
+            {
+              "name": "Spanish",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "mx",
+          "url": "/mx/",
+          "display_name": "Mexico",
+          "events_name": "/es/mexico/",
+          "languages": [
+            {
+              "name": "Spanish",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "pe",
+          "url": "/pe/",
+          "display_name": "Peru",
+          "events_name": "/es/peru/",
+          "languages": [
+            {
+              "name": "Spanish",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "pr",
+          "url": "/pr/",
+          "display_name": "Puerto Rico",
+          "events_name": "/es/puerto-rico/",
+          "languages": [
+            {
+              "name": "Spanish",
+              "url": ""
+            },
+            {
+              "name": "Spanish",
+              "url": "en/"
+            }
+          ]
+        },
+        {
+          "code": "cl",
+          "url": "/cl/",
+          "display_name": "Chile",
+          "events_name": "/es/chile/",
+          "languages": [
+            {
+              "name": "Spanish",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "gt",
+          "url": "/gt/",
+          "display_name": "Guatemala",
+          "events_name": "/es/guatemala/",
+          "languages": [
+            {
+              "name": "Spanish",
+              "url": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Greater China",
+      "className": "china",
+      "countries": [
+        {
+          "code": "cn",
+          "url": "https://kyani.cn",
+          "display_name": "China",
+          "events_name": "https://kyani.cn",
+          "languages": [
+            {
+              "name": "Chinese",
+              "url": ""
+            },
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "hk",
+          "url": "/hk/zh-hk",
+          "display_name": "Hong Kong",
+          "events_name": "/zh/hong-kong/",
+          "languages": [
+            {
+              "name": "Chinese",
+              "url": ""
+            },
+            {
+              "name": "English",
+              "url": "en/"
+            }
+          ]
+        },
+        {
+          "code": "mo",
+          "url": "/mo/zh-hk",
+          "display_name": "Macau",
+          "events_name": "/zh/macau/",
+          "languages": [
+            {
+              "name": "Chinese",
+              "url": ""
+            },
+            {
+              "name": "English",
+              "url": "en/"
+            }
+          ]
+        },
+        {
+          "code": "tw",
+          "url": "/tw/",
+          "display_name": "Taiwan",
+          "events_name": "/zh/taiwan/",
+          "languages": [
+            {
+              "name": "Chinese",
+              "url": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "South Asia, North Asia, Pacific",
+      "className": "asia",
+      "countries": [
+        {
+          "code": "au",
+          "url": "/au/",
+          "display_name": "Australia",
+          "events_name": "/en/australia/",
+          "languages": [
+            {
+              "name": "Chinese",
+              "url": "zh/"
+            },
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "pf",
+          "url": "/pf/",
+          "display_name": "French Polynesia",
+          "events_name": "/fr/french-polynesia/",
+          "languages": [
+            {
+              "name": "French",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "id",
+          "url": "/id/",
+          "display_name": "Indonesia",
+          "events_name": "/id/indonesia/",
+          "languages": [
+            {
+              "name": "Indonesian",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "jp",
+          "url": "/jp/ja-jp",
+          "display_name": "Japan",
+          "events_name": "/ja/japan/",
+          "languages": [
+            {
+              "name": "Japanese",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "kr",
+          "url": "/kr/ko-kr",
+          "display_name": "Korea",
+          "events_name": "/kr/korea/",
+          "languages": [
+            {
+              "name": "Korean",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "my",
+          "url": "/my/en-sg",
+          "display_name": "Malaysia",
+          "events_name": "/en/malaysia/",
+          "languages": [
+            {
+              "name": "Chinese",
+              "url": "zh/"
+            },
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "nz",
+          "url": "/nz/",
+          "display_name": "New Zealand",
+          "events_name": "/en/new-zealand/",
+          "languages": [
+            {
+              "name": "Chinese",
+              "url": "zh/"
+            },
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "ph",
+          "url": "/ph/",
+          "display_name": "Philippines",
+          "events_name": "/en/philippines/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "sg",
+          "url": "/sg/en-sg",
+          "display_name": "Singapore",
+          "events_name": "/en/singapore/",
+          "languages": [
+            {
+              "name": "Chinese",
+              "url": "zh/"
+            },
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "th",
+          "url": "/th/th-th",
+          "display_name": "Thailand",
+          "events_name": "/th/thailand/",
+          "languages": [
+            {
+              "name": "Thai",
+              "url": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Europe",
+      "className": "europe",
+      "countries": [
+        {
+          "code": "at",
+          "url": "/at/",
+          "display_name": "Austria",
+          "events_name": "/de/austria/",
+          "languages": [
+            {
+              "name": "German",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "be",
+          "url": "/be/",
+          "display_name": "Belgium",
+          "events_name": "/fr/belgium/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            },
+            {
+              "name": "French",
+              "url": "fr/"
+            }
+          ]
+        },
+        {
+          "code": "bg",
+          "url": "/bg/",
+          "display_name": "Bulgaria",
+          "events_name": "/en/bulgaria/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "hr",
+          "url": "/hr/",
+          "display_name": "Croatia",
+          "events_name": "/hr/croatia/",
+          "languages": [
+            {
+              "name": "Croatian",
+              "url": ""
+            },
+            {
+              "name": "English",
+              "url": "en/"
+            }
+          ]
+        },
+        {
+          "code": "cy",
+          "url": "/cy/",
+          "display_name": "Cyprus",
+          "events_name": "/en/cyprus/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "cz",
+          "url": "/cz/",
+          "display_name": "Czech Republic",
+          "events_name": "/cs/czech-republic/",
+          "languages": [
+            {
+              "name": "Czech",
+              "url": ""
+            },
+            {
+              "name": "English",
+              "url": "en/"
+            }
+          ]
+        },
+        {
+          "code": "dk",
+          "url": "/dk/",
+          "display_name": "Denmark",
+          "events_name": "/da/denmark/",
+          "languages": [
+            {
+              "name": "Danish",
+              "url": ""
+            },
+            {
+              "name": "English",
+              "url": "en/"
+            }
+          ]
+        },
+        {
+          "code": "ee",
+          "url": "/ee/",
+          "display_name": "Estonia",
+          "events_name": "/et/estonia/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "Estonian",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "fi",
+          "url": "/fi/",
+          "display_name": "Finland",
+          "events_name": "/fi/finland/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "Finnish",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "fr",
+          "url": "/fr/",
+          "display_name": "France",
+          "events_name": "/fr/france/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "French",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "de",
+          "url": "/de/",
+          "display_name": "Germany",
+          "events_name": "/de/germany/",
+          "languages": [
+            {
+              "name": "German",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "gr",
+          "url": "/gr/",
+          "display_name": "Greece",
+          "events_name": "/en/greece/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "hu",
+          "url": "/hu/",
+          "display_name": "Hungary",
+          "events_name": "/hu/hungary/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "Hungarian",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "ie",
+          "url": "/ie/",
+          "display_name": "Ireland",
+          "events_name": "/en/ireland/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "it",
+          "url": "/it/",
+          "display_name": "Italy",
+          "events_name": "/it/italy/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "Italian",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "lv",
+          "url": "/lv/",
+          "display_name": "Latvia",
+          "events_name": "/lv/latvia/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "Latvian",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "li",
+          "url": "/li/",
+          "display_name": "Liechtenstein",
+          "events_name": "/de/liechtenstein/",
+          "languages": [
+            {
+              "name": "German",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "lt",
+          "url": "/lt/",
+          "display_name": "Lithuania",
+          "events_name": "/lt/lithuania/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "Lithuanian",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "lu",
+          "url": "/lu/",
+          "display_name": "Luxembourg",
+          "events_name": "/en/luxembourg/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "mt",
+          "url": "/mt/",
+          "display_name": "Malta",
+          "events_name": "/en/malta/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "nl",
+          "url": "/nl/",
+          "display_name": "Netherlands",
+          "events_name": "/nl/netherlands/",
+          "languages": [
+            {
+              "name": "Dutch",
+              "url": ""
+            },
+            {
+              "name": "English",
+              "url": "en/"
+            }
+          ]
+        },
+        {
+          "code": "no",
+          "url": "/no/",
+          "display_name": "Norway",
+          "events_name": "/no/norway/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "Norwegian",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "pl",
+          "url": "/pl/",
+          "display_name": "Poland",
+          "events_name": "/pl/poland/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "Polish",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "pt",
+          "url": "/pt/",
+          "display_name": "Portugal",
+          "events_name": "/en/portugal/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "ro",
+          "url": "/ro/",
+          "display_name": "Romania",
+          "events_name": "/en/romania/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "sk",
+          "url": "/sk/",
+          "display_name": "Slovakia",
+          "events_name": "/sk/slovakia/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "Hungarian",
+              "url": "hu/"
+            },
+            {
+              "name": "Slovak",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "si",
+          "url": "/si/",
+          "display_name": "Slovenia",
+          "events_name": "/en/slovenia/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "es",
+          "url": "/es/",
+          "display_name": "Spain",
+          "events_name": "/es/spain/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "Spanish",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "se",
+          "url": "/se/",
+          "display_name": "Sweden",
+          "events_name": "/se/sweden/",
+          "languages": [
+            {
+              "name": "English",
+              "url": "en/"
+            },
+            {
+              "name": "Swedish",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "ch",
+          "url": "/ch/",
+          "display_name": "Switzerland",
+          "events_name": "/de/switzerland/",
+          "languages": [
+            {
+              "name": "French",
+              "url": "fr/"
+            },
+            {
+              "name": "German",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "tr",
+          "url": "/tr/",
+          "display_name": "Turkey",
+          "events_name": "/tr/turkey/",
+          "languages": [
+            {
+              "name": "Turkish",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "code": "gb",
+          "url": "/gb/en-gb",
+          "display_name": "United Kingdom",
+          "events_name": "/en/united-kingdom/",
+          "languages": [
+            {
+              "name": "English",
+              "url": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
