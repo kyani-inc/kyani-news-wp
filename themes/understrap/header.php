@@ -11,6 +11,9 @@
 defined('ABSPATH') || exit;
 
 $container = get_theme_mod('understrap_container_type');
+$logoLink = "amare-kyani-header-logo.svg";
+$logoWidth = "80";
+$homeLink = ""
 ?>
 <!-- Hotjar Tracking Code for https://news.kyani.com -->
 <!DOCTYPE html>
@@ -72,27 +75,11 @@ $container = get_theme_mod('understrap_container_type');
 				<?php esc_html_e('Main Navigation', 'understrap'); ?>
 			</h2>
 
-			<!-- Your site title as branding in the menu -->
-			<?php if (!has_custom_logo()) { ?>
-
-				<?php if (is_front_page() && is_home()) : ?>
-
-					<h1 class="navbar-brand mb-0"><a rel="home" href="<?php echo esc_url(home_url('/')); ?>"
-													 itemprop="url"><?php bloginfo('name'); ?></a></h1>
-
-				<?php else : ?>
-
-					<a class="navbar-brand" rel="home" href="<?php echo esc_url(home_url('/')); ?>"
-					   itemprop="url"><?php bloginfo('name'); ?></a>
-
-				<?php endif; ?>
-
-				<?php
-			} else {
-				the_custom_logo();
-			}
-			?>
-			<!-- end custom logo -->
+			<a href="<?php echo($homeLink != "" ? "//" . $homeLink : esc_url(home_url('/'))); ?>"
+			   class="navbar-brand"><img
+						src="<?php echo esc_url(bloginfo('template_directory') . "/images/" . $logoLink) ?>"
+						alt=""
+						width=<?php echo esc_attr($logoWidth) ?>></a>
 
 			<!-- The WordPress Menu goes here -->
 			<?php
