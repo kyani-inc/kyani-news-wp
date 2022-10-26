@@ -58,6 +58,3 @@ img.wp-post-image, article img, figure, img, #secondary img {
   }
 }
 
-/* workaround css for forcing svg files to appear */
-/* ref: https://www.jucra.com/whmcs/knowledgebase/140/ */
-img[src$=".svg"] { width: 100% !important; height: auto !important; }
